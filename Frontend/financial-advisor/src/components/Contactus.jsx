@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import emailjs from 'emailjs-com';
 
-
 const ContactUs = () => {
-  
+  const ServiceId = process.env.REACT_APP_EMAILJS_SERVICE_ID;
+  const TemplateId = process.env.REACT_APP_EMAILJS_TEMPLATE_ID;
+  const UserId = process.env.REACT_APP_EMAILJS_USER_ID;
 
   const [formData, setFormData] = useState({
     firstName: '',
@@ -12,7 +13,6 @@ const ContactUs = () => {
     phoneNumber: '',
     message: '',
   });
-
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,11 +24,10 @@ const ContactUs = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-  
     emailjs
       .send(
-        'service_qllbd8c', 
-       'template_mq0eera', 
+        ServiceId,
+        TemplateId,
         {
           firstName: formData.firstName,
           lastName: formData.lastName,
@@ -36,12 +35,20 @@ const ContactUs = () => {
           phoneNumber: formData.phoneNumber,
           message: formData.message,
         },
-       '3K5-p_K3esHOE-ap_'
+        UserId
       )
       .then(
         (response) => {
           console.log('SUCCESS!', response.status, response.text);
           alert('Message sent successfully!');
+          // Reset the form fields
+          setFormData({
+            firstName: '',
+            lastName: '',
+            email: '',
+            phoneNumber: '',
+            message: '',
+          });
         },
         (error) => {
           console.error('FAILED...', error);
