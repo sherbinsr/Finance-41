@@ -3,6 +3,9 @@
     "@emotion/react": "^11.13.3",
     "@emotion/styled": "^11.13.0",
     "@mui/material": "^6.1.4",
-    "bootstrap": "^5.3.3"
+    "bootstrap": "^5.3.3",
+    "dotenv": "^16.4.5",
+    "emailjs-com": "^3.2.0",
+    "os-browserify": "^0.3.0"
   }
 }

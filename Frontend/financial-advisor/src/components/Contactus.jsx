@@ -1,26 +1,53 @@
 import React, { useState } from 'react';
+import emailjs from 'emailjs-com';
+
 
 const ContactUs = () => {
+  
+
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
-    company: '',
     email: '',
     phoneNumber: '',
     message: '',
   });
 
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
+    setFormData({
+      ...formData,
       [name]: value,
-    }));
+    });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+  
+    emailjs
+      .send(
+        'service_qllbd8c', 
+       'template_mq0eera', 
+        {
+          firstName: formData.firstName,
+          lastName: formData.lastName,
+          email: formData.email,
+          phoneNumber: formData.phoneNumber,
+          message: formData.message,
+        },
+       '3K5-p_K3esHOE-ap_'
+      )
+      .then(
+        (response) => {
+          console.log('SUCCESS!', response.status, response.text);
+          alert('Message sent successfully!');
+        },
+        (error) => {
+          console.error('FAILED...', error);
+          alert('Message failed to send.');
+        }
+      );
   };
 
   return (
@@ -92,12 +119,10 @@ const ContactUs = () => {
           />
         </div>
 
-        <br></br>
         <div className="text-center">
           <button type="submit" className="btn btn-dark btn-sm">Let's talk</button>
         </div>
       </form>
-      <br></br> <br></br>
     </div>
   );
 };
