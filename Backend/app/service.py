@@ -9,9 +9,9 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
-
-
 from typing import List
+from pydantic import BaseModel
+from fastapi import HTTPException
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -103,3 +103,42 @@ def schedule_task():
     scheduler.add_job(send_trends_task, 'cron', hour=11, minute=30)
     scheduler.start()
     logger.info("Scheduling the task")
+
+class Query(BaseModel):
+    message: str
+def generate_advice(user_input: str) -> str:
+
+    try:
+        # Check if the user input is financial in nature
+        if not is_financial_query(user_input):
+            return "I'm here to help with financial questions. Please ask me about budgeting, saving, investing, retirement planning, taxes, or debt management."
+
+        # Updated API call for chat completion
+        chat_completion = client.chat.completions.create(
+            model="llama3-8b-8192",  # Ensure model name is correct
+            messages=[
+                {
+                    "role": "system",  # System instructions to the assistant
+                    "content": "You are a financial advisor AI. Your responses must be simple and no longer than 3 lines. Only provide advice on personal finance topics such as budgeting, saving, investing, retirement planning, taxes, and debt management. Do not answer questions that are not related to finance. Always ensure your advice is practical, easy to understand, and tailored to individual needs. Provide strategies for both short-term and long-term financial goals."
+                },
+                {
+                    "role": "user",  # User message containing the query
+                    "content": user_input,
+                }
+            ]
+        )
+
+        # Return the content of the first choice message
+        return chat_completion.choices[0].message.content
+
+    except Exception as e:
+        print(f"Error details: {str(e)}")  # Log the error for debugging
+        raise HTTPException(status_code=500, detail="Error fetching response from Groq API")
+
+def is_financial_query(query: str) -> bool:
+    # Simple check for financial keywords (can be improved using NLP libraries like spaCy)
+    financial_keywords = [
+        "budget", "saving", "investing", "retirement",
+        "tax", "debt", "finance", "interest", "loan", "wealth", "credit", "savings"
+    ]
+    return any(keyword in query.lower() for keyword in financial_keywords)
