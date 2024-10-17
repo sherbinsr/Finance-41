@@ -4,15 +4,10 @@ import logging
 from . import models, schemas, service
 from .database import engine, Base, get_db
 from pydantic import BaseModel
-import os
-from dotenv import load_dotenv
-from groq import Groq
 from fastapi import FastAPI, BackgroundTasks
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import asyncio
-
-
 
 Base.metadata.create_all(bind=engine)
 app = FastAPI()
@@ -21,14 +16,12 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-# Load environment variables from the .env file
-load_dotenv()
 
 
-# Initialize the Groq client with your API key from the environment variable
-client = Groq(
-    api_key=os.environ.get("GROK_API_KEY"),
-)
+
+
+class Query(BaseModel):
+    message: str
 
 # Add CORS middleware
 app.add_middleware(
@@ -69,9 +62,6 @@ async def send_market_trends_endpoint(background_tasks: BackgroundTasks):
     service.schedule_task()
     asyncio.get_event_loop().run_forever()
     return JSONResponse(content={"message": "Market trends are being sent to users."})
-
-
-
 
 # API route for chatbot interaction
 @app.post("/chat")
