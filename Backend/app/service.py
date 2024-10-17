@@ -3,7 +3,6 @@ from passlib.context import CryptContext
 from . import models, schemas
 import logging
 import  requests
-import os
 import aiosqlite
 import smtplib
 from email.mime.text import MIMEText
@@ -17,6 +16,7 @@ from fastapi import HTTPException
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
+# Intializing Logger
 logger = logging.getLogger(__name__)
 
 DATABASE = "test.db"
@@ -30,17 +30,19 @@ SMTP_PASSWORD = os.environ.get("email_password")
 # Load environment variables from the .env file
 load_dotenv()
 
-# Initialize the Groq client with your API key from the environment variable
+# Groq client with your API key from the environment variable
 client = Groq(
     api_key=os.environ.get("GROK_API_KEY"),
 )
 
 
+# Function to hash the password
 def get_password_hash(password: str):
     logger.debug("Hashing the password %s",password)
     return pwd_context.hash(password)
     logger.info("password hashed successfully")
 
+# creating new User
 def create_user(db: Session, user: schemas.UserCreate):
     hashed_password = get_password_hash(user.password)
     db_user = models.User(username=user.username, email=user.email, hashed_password=hashed_password)
@@ -49,13 +51,17 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
+# get user by username
 def get_user_by_username(db: Session, username: str):
     logger.info("getting the user by username")
     return db.query(models.User).filter(models.User.username == username).first()
 
+# Function to verify password
 def verify_password(plain_password, hashed_password):
     logger.info("Attempting to verify password")
     return pwd_context.verify(plain_password, hashed_password)
+
+# Function to Check Market Trends
 def fetch_market_trends():
     # API URL
     url = "https://indian-stock-exchange-api2.p.rapidapi.com/trending"
@@ -74,6 +80,7 @@ def fetch_market_trends():
         data = response.json()
     logger.info("Returning Market Trends")
     return data
+# Function to get user emails
 async def get_users():
     async with aiosqlite.connect(DATABASE) as db:
         async with db.execute("SELECT email FROM users") as cursor:
@@ -81,6 +88,7 @@ async def get_users():
             rows = await cursor.fetchall()
             return [row[0] for row in rows]
 
+# Function to Send emails for batch jobs
 async def send_email(recipient: str, trends: List[str]):
     subject = "Latest Market Trends"
     body = "\n".join(trends)
@@ -97,6 +105,7 @@ async def send_email(recipient: str, trends: List[str]):
         server.login(SMTP_USER, SMTP_PASSWORD)
         server.sendmail(SMTP_USER, recipient, msg.as_string())
 
+# Batch Function to send batch jobs
 async def send_market_trends(trends: List[str]):
     users = await get_users()
     for user in users:
@@ -108,14 +117,14 @@ async def send_trends_task():
     logger.info("Sending Market Information to Users")
     await send_market_trends(trends)
 
-# Task scheduler
+# Task scheduler for batch jobs
 def schedule_task():
     scheduler = AsyncIOScheduler()
     scheduler.add_job(send_trends_task, 'cron', hour=11, minute=30)
     scheduler.start()
     logger.info("Scheduling the task")
 
-
+# function to generate Chat
 def generate_advice(user_input: str) -> str:
 
     try:
@@ -145,6 +154,7 @@ def generate_advice(user_input: str) -> str:
         print(f"Error details: {str(e)}")  # Log the error for debugging
         raise HTTPException(status_code=500, detail="Error fetching response from Groq API")
 
+# Function to Check the does the query is related to Finance
 def is_financial_query(query: str) -> bool:
     # Simple check for financial keywords (can be improved using NLP libraries like spaCy)
     financial_keywords = [
