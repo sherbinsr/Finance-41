@@ -1,0 +1,62 @@
+.app {
+  height: 600px ;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  background-color: #2f2f2f;
+}
+
+.main-content {
+  background-image: 
+    linear-gradient(to bottom, rgba(255, 255, 255, 0) 70%, rgba(0, 0, 0, 0.7)), 
+    url('../assets/bg2.jpg'); /* Replace with actual path */
+  background-size: cover;
+  background-position: center;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.text-light {
+  color: white;
+}
+
+/* Center nav items and apply hover underline effect */
+.header-links {
+  display: flex;
+  align-items: center;
+}
+
+.header-link {
+  position: relative;
+  display: inline-block;
+  margin: 0 15px;
+  padding-bottom: 5px;
+  color: white;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.header-link::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  display: block;
+  left: 50%;
+  bottom: 0;
+  background: #ffffff; /* Color of the underline */
+  transition: width 0.3s ease, left 0.3s ease;
+}
+
+.header-link:hover::after {
+  width: 100%;
+  left: 0;
+}
+
+.header-link:hover {
+  color: #ff6f61;
+}
