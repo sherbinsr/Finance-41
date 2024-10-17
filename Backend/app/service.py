@@ -10,7 +10,9 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 from apscheduler.schedulers.asyncio import AsyncIOScheduler
 from typing import List
-from pydantic import BaseModel
+import os
+from dotenv import load_dotenv
+from groq import Groq
 from fastapi import HTTPException
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
@@ -24,6 +26,15 @@ SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587  # For TLS
 SMTP_USER = os.environ.get("email_user")
 SMTP_PASSWORD = os.environ.get("email_password")
+
+# Load environment variables from the .env file
+load_dotenv()
+
+# Initialize the Groq client with your API key from the environment variable
+client = Groq(
+    api_key=os.environ.get("GROK_API_KEY"),
+)
+
 
 def get_password_hash(password: str):
     logger.debug("Hashing the password %s",password)
@@ -104,8 +115,7 @@ def schedule_task():
     scheduler.start()
     logger.info("Scheduling the task")
 
-class Query(BaseModel):
-    message: str
+
 def generate_advice(user_input: str) -> str:
 
     try:
