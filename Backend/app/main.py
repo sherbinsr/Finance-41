@@ -16,10 +16,6 @@ logger = logging.getLogger(__name__)
 
 app = FastAPI()
 
-
-
-
-
 class Query(BaseModel):
     message: str
 
@@ -31,6 +27,8 @@ app.add_middleware(
     allow_methods=["*"],  # Allows all HTTP methods
     allow_headers=["*"],  # Allows all headers
 )
+
+# Register User
 @app.post("/register", response_model=schemas.ShowUser)
 def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
     logger.info("In register function")
@@ -40,6 +38,7 @@ def register(user: schemas.UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Username already registered")
     return service.create_user(db, user)
 
+# Login User
 @app.post("/login")
 def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
     logger.info("In login function")
