@@ -19,7 +19,7 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 # Intializing Logger
 logger = logging.getLogger(__name__)
 
-DATABASE = "test.db"
+DATABASE = "finance.db"
 
 # Email configuration
 SMTP_SERVER = "smtp.gmail.com"
