@@ -75,7 +75,7 @@ function Chatbot() {
 
   return (
     <div className="chatbot-container container-fluid d-flex flex-column justify-content-between">
-      <h1 className="text-center">Finance 41</h1>
+      <h1 className="text-center fw-bold text-danger">Finance 41</h1>
       <div className="chat-history mb-3 overflow-auto" style={{ flexGrow: 1 }}>
         {chatHistory.map((chat, index) => (
           <div key={index} className={`chat-message ${chat.sender}`}>
@@ -92,7 +92,7 @@ function Chatbot() {
           className="form-control me-2" 
           value={message} 
           onChange={(e) => setMessage(e.target.value)} 
-          onKeyDown={(e) => e.key === 'Enter' && sendMessage()} // Handle Enter key
+          onKeyDown={(e) => e.key === 'Enter' && sendMessage()} 
           placeholder="Ask for financial advice..." 
         />
         <button className="btn btn-primary" onClick={sendMessage}>Send</button>
