@@ -68,15 +68,19 @@ async def send_market_trends_endpoint(background_tasks: BackgroundTasks):
 # API route for chatbot interaction
 @app.post("/chat")
 async def chat(query: Query):
+    logger.debug("generating response from grok api")
     response =service.generate_advice(query.message)
+    logger.info("generated response from grok api")
     return {"response": response}
 
 # Route to add a new article
 @app.post("/addarticle", response_model=schemas.Article)
 def create_article(article: schemas.ArticleCreate, db: Session = Depends(get_db)):
+    logger.debug("adding a new article to database")
     return articleservice.create_article(db=db, article=article)
 
 # Route to get all articles
 @app.get("/getarticles", response_model=list[schemas.Article])
 def get_articles(db: Session = Depends(get_db)):
+    logger.debug("getting all article from database")
     return articleservice.get_articles(db=db)
