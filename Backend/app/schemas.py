@@ -1,4 +1,5 @@
 from pydantic import BaseModel
+from datetime import datetime
 
 class UserCreate(BaseModel):
     username: str
@@ -24,11 +25,13 @@ class ArticleBase(BaseModel):
     title: str
     content: str
 
+
 class ArticleCreate(ArticleBase):
     pass
 
 class Article(ArticleBase):
     id: int
+    created_at: datetime  # Include created_at in the response schema
 
     class Config:
         orm_mode = True
