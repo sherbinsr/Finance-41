@@ -20,3 +20,15 @@ class ShowUser(BaseModel):
 class User(BaseModel):
     name: str
     email: str
+class ArticleBase(BaseModel):
+    title: str
+    content: str
+
+class ArticleCreate(ArticleBase):
+    pass
+
+class Article(ArticleBase):
+    id: int
+
+    class Config:
+        orm_mode = True
