@@ -13,7 +13,7 @@ function Footer() {
             <p>Email: finance41@41.com</p>
             <p>Phone: +91 9677472562</p>
         </div>
-        <p className="mb-0">© 2024 Your Company Name. All rights reserved.</p>
+        <p className="mb-0">© 2024 Finance 41. All rights reserved.</p>
     </div>
 </footer>
   );

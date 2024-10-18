@@ -25,7 +25,7 @@ const Home = () => {
                   <Nav.Link href="#" className="header-link">Home</Nav.Link>
                   <Nav.Link href="#" className="header-link">Market Trends </Nav.Link>
                   <Nav.Link href="/chatbot" className="header-link">Talk with AI</Nav.Link>
-                  <Nav.Link href="#" className="header-link">News </Nav.Link>
+                  <Nav.Link href="/news" className="header-link">News </Nav.Link>
                   <Nav.Link href="/contactus" className="header-link">Contact Us</Nav.Link>
                   <Button variant="outline-light" href="/register" className="ms-md-3">SIGN UP</Button>
                 </Nav>

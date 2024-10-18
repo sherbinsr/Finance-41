@@ -6,6 +6,7 @@
     "bootstrap": "^5.3.3",
     "dotenv": "^16.4.5",
     "emailjs-com": "^3.2.0",
+    "lucide-react": "^0.453.0",
     "os-browserify": "^0.3.0"
   }
 }
