@@ -101,3 +101,13 @@ def get_market_trends():
     except Exception as e:
         logger.error(str(e))
         raise HTTPException(status_code=500, detail="Error fetching market trends")
+
+@app.get("/getlatestarticles", response_model=list[schemas.Article])
+def get_articles(db: Session = Depends(get_db)):
+    try:
+        logger.debug("Getting the top 10 latest articles from the database")
+        articles = service.get_latest_articles(db=db)  # No limit parameter
+        return articles
+    except Exception as e:
+        logger.error(str(e))
+        raise HTTPException(status_code=500, detail="Unable to fetch article trends")

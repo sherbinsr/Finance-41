@@ -162,3 +162,7 @@ def is_financial_query(query: str) -> bool:
         "tax", "debt", "finance", "interest", "loan", "wealth", "credit", "savings"
     ]
     return any(keyword in query.lower() for keyword in financial_keywords)
+
+# Funtion to sort out the latest news
+def get_latest_articles(db: Session):
+    return db.query(models.Article).order_by(models.Article.created_at.desc()).limit(10).all()
