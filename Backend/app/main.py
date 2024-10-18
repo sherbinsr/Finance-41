@@ -8,7 +8,7 @@ from fastapi import FastAPI, BackgroundTasks
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import asyncio
-
+from .exceptions import ChatServiceException
 
 # Recreate the articles table with the new structure
 Base.metadata.create_all(bind=engine)
@@ -68,10 +68,14 @@ async def send_market_trends_endpoint(background_tasks: BackgroundTasks):
 # API route for chatbot interaction
 @app.post("/chat")
 async def chat(query: Query):
-    logger.debug("generating response from grok api")
-    response =service.generate_advice(query.message)
-    logger.info("generated response from grok api")
-    return {"response": response}
+    logger.debug("Generating response from grok API")
+    try:
+        response = service.generate_advice(query.message)
+        logger.info("Generated response from grok API")
+        return {"response": response}
+    except Exception as e:
+        logger.error(f"Error generating response: {str(e)}")
+        raise ChatServiceException(detail="Failed to generate chat response")
 
 # Route to add a new article
 @app.post("/addarticle", response_model=schemas.Article)
@@ -82,5 +86,18 @@ def create_article(article: schemas.ArticleCreate, db: Session = Depends(get_db)
 # Route to get all articles
 @app.get("/getarticles", response_model=list[schemas.Article])
 def get_articles(db: Session = Depends(get_db)):
-    logger.debug("getting all article from database")
-    return articleservice.get_articles(db=db)
+    try:
+        logger.debug("getting all article from database")
+        return articleservice.get_articles(db=db)
+    except Exception as e:
+        logger.error(str(e))
+        raise HTTPException(status_code=500, detail="unable to fetch articles trends")
+# Route Api for market-trends
+@app.get("/market-trends")
+def get_market_trends():
+    try:
+        data = service.fetch_market_trends()
+        return data
+    except Exception as e:
+        logger.error(str(e))
+        raise HTTPException(status_code=500, detail="Error fetching market trends")
