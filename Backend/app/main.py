@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException
 from sqlalchemy.orm import Session
 import logging
-from . import models, schemas, service
+from . import models, schemas, service,articleservice
 from .database import engine, Base, get_db
 from pydantic import BaseModel
 from fastapi import FastAPI, BackgroundTasks
@@ -67,3 +67,13 @@ async def send_market_trends_endpoint(background_tasks: BackgroundTasks):
 async def chat(query: Query):
     response =service.generate_advice(query.message)
     return {"response": response}
+
+# Route to add a new article
+@app.post("/addarticle", response_model=schemas.Article)
+def create_article(article: schemas.ArticleCreate, db: Session = Depends(get_db)):
+    return articleservice.create_article(db=db, article=article)
+
+# Route to get all articles
+@app.get("/getarticles", response_model=list[schemas.Article])
+def get_articles(db: Session = Depends(get_db)):
+    return articleservice.get_articles(db=db)
