@@ -9,7 +9,10 @@ from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import asyncio
 
+
+# Recreate the articles table with the new structure
 Base.metadata.create_all(bind=engine)
+
 app = FastAPI()
 
 logger = logging.getLogger(__name__)
