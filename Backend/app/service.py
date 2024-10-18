@@ -42,7 +42,7 @@ def get_password_hash(password: str):
     return pwd_context.hash(password)
     logger.info("password hashed successfully")
 
-# creating new User
+# Funtion creating new User
 def create_user(db: Session, user: schemas.UserCreate):
     hashed_password = get_password_hash(user.password)
     db_user = models.User(username=user.username, email=user.email, hashed_password=hashed_password)
@@ -51,7 +51,7 @@ def create_user(db: Session, user: schemas.UserCreate):
     db.refresh(db_user)
     return db_user
 
-# get user by username
+# Function get user by username
 def get_user_by_username(db: Session, username: str):
     logger.info("getting the user by username")
     return db.query(models.User).filter(models.User.username == username).first()
@@ -120,7 +120,7 @@ async def send_trends_task():
 # Task scheduler for batch jobs
 def schedule_task():
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(send_trends_task, 'cron', hour=11, minute=30)
+    scheduler.add_job(send_trends_task, 'cron', hour=11, minute=00)
     scheduler.start()
     logger.info("Scheduling the task")
 
