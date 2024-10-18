@@ -6,11 +6,13 @@ import Login  from './components/Login';
 import Home  from './components/Home'
 import ContactUs  from './components/Contactus';
 import News from './components/News';
+import Topbar  from './components/Topbar';
 
 
 function App() {
   return (
     <Router>
+      <Topbar/>
       <Routes>      
       <Route path="/" element={<Home/>} />
       <Route path="/chatbot" element={<Chatbot />} />
