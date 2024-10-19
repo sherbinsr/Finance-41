@@ -96,7 +96,6 @@ async def google_login(request: Request):
 @app.get("/auth")
 async def auth(request: Request, db: Session = Depends(get_db)):
     try:
-        # Fetch the token using the Google OAuth2 provider
         token = await oauth.google.authorize_access_token(request)
         userinfo = token.get('userinfo')
         if userinfo:
@@ -109,14 +108,6 @@ async def auth(request: Request, db: Session = Depends(get_db)):
 
         if not token:
             raise ValueError("Token not generated")
-
-        try:
-            user_info = await oauth.google.parse_id_token(request, token)
-            print("got user info")
-            logger.info(f"User Info: {user_info}")
-            print(user_info)
-        except Exception as e:
-            logger.error(f"Error parsing token: {e}")
 
         # Check if user exists in the database
         db_user = service.get_user_by_username(db, email)
