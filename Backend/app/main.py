@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException,Request
 from sqlalchemy.orm import Session
 import logging
-from . import models, schemas, service,articleservice
+from . import models, schemas, service,articleservice,secrets
 from .database import engine, Base, get_db
 from pydantic import BaseModel
 from fastapi import FastAPI, BackgroundTasks
@@ -13,7 +13,7 @@ from authlib.integrations.starlette_client import OAuth
 from fastapi.responses import RedirectResponse
 import os
 from dotenv import load_dotenv
-
+from starlette.middleware.sessions import SessionMiddleware
 
 
 # Load environment variables from the .env file
@@ -25,8 +25,6 @@ Base.metadata.create_all(bind=engine)
 app = FastAPI()
 
 logger = logging.getLogger(__name__)
-
-app = FastAPI()
 
 
 # Initialize OAuth
@@ -40,9 +38,11 @@ oauth.register(
     access_token_url='https://accounts.google.com/o/oauth2/token',
     access_token_params=None,
     refresh_token_url=None,
-    redirect_uri='http://localhost:8000/auth',
+    redirect_uri='http://localhost:3000/',
     client_kwargs={'scope': 'openid email profile'}
 )
+secret_key = secrets.genrate_secret_key()
+app.add_middleware(SessionMiddleware, secret_key=secret_key)
 
 
 class Query(BaseModel):
@@ -86,24 +86,33 @@ def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
 # Google SSO Login
 @app.get("/sso-login")
 async def google_login(request: Request):
-    redirect_uri = 'http://127.0.0.1:8000/auth'  # The URL to redirect to after login
+    redirect_uri = request.url_for("auth")
+    logger.debug(f"Redirect URI: {redirect_uri}")
     return await oauth.google.authorize_redirect(request, redirect_uri)
 
-# Google SSO Callback
-@app.route('/auth')
+@app.get("/auth")
 async def auth(request: Request, db: Session = Depends(get_db)):
-    token = await oauth.google.authorize_access_token(request)
-    user_info = await oauth.google.parse_id_token(request, token)
+    try:
+        token = await oauth.google.authorize_access_token(request)
+        logger.info(f"Token: {token}")
 
-    # Check if user exists in your database
-    db_user = service.get_user_by_username(db, user_info['email'])
+        user_info = await oauth.google.parse_id_token(request, token)
+        logger.info(f"User Info: {user_info}")
 
-    if not db_user:
-        # If user doesn't exist, create a new user
-        db_user = service.create_user(db, schemas.UserCreate(username=user_info['email'], password="oauth2"))  # Placeholder password
+        if request.session.get('oauth_state') != request.query_params.get('state'):
+            raise ValueError("Invalid state parameter")
 
-    logger.info("Google SSO login successful")
-    return {"message": "Login successful!", "id": db_user.id}
+        db_user = service.get_user_by_username(db, user_info['email'])
+        if not db_user:
+            db_user = service.create_user(db, schemas.UserCreate(username=user_info['email'], password="hashed_password"))
+        return {"message": "Login successful!", "id": db_user.id}
+
+    except ValueError as ve:
+        logger.error(f"ValueError: {str(ve)}")
+        raise HTTPException(status_code=400, detail=str(ve))
+    except Exception as e:
+        logger.error(f"Error: {str(e)}")
+        raise HTTPException(status_code=500, detail="Authentication failed")
 
 # API for send batch jobs
 @app.get("/send_market_trends")
