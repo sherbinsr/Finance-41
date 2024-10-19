@@ -47,7 +47,6 @@ oauth.register(
 secret_key = secrets.genrate_secret_key()
 app.add_middleware(SessionMiddleware, secret_key=secret_key)
 
-
 class Query(BaseModel):
     message: str
 
@@ -114,7 +113,8 @@ async def auth(request: Request, db: Session = Depends(get_db)):
         if not db_user:
             db_user = service.create_user(db, schemas.UserCreate(username=name, email=email, password=at_hash))
 
-        return {"message": "Login successful!", "id": db_user.id}
+        return RedirectResponse(url="http://localhost:3000/")
+
 
     except ValueError as ve:
         logger.error(f"ValueError: {str(ve)}")
