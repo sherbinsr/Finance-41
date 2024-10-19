@@ -7,3 +7,5 @@ pytest
 httpx
 groq
 apscheduler
+authlib
+starlette
