@@ -33,12 +33,15 @@ oauth.register(
     name='google',
     client_id=os.environ.get("CLIENT_ID"),
     client_secret=os.environ.get("CLIENT_SECRET"),
+    project_id='finance-41-1729262432725',
     authorize_url='https://accounts.google.com/o/oauth2/auth',
     authorize_params=None,
-    access_token_url='https://accounts.google.com/o/oauth2/token',
+    access_token_url='https://oauth2.googleapis.com/token',
     access_token_params=None,
     refresh_token_url=None,
-    redirect_uri='http://localhost:3000/',
+    auth_provider_x509_cert_url='https://www.googleapis.com/oauth2/v1/certs',
+    jwks_uri = 'https://www.googleapis.com/oauth2/v3/certs',
+    redirect_uri='http://127.0.0.1:8000/auth',
     client_kwargs={'scope': 'openid email profile'}
 )
 secret_key = secrets.genrate_secret_key()
@@ -93,18 +96,33 @@ async def google_login(request: Request):
 @app.get("/auth")
 async def auth(request: Request, db: Session = Depends(get_db)):
     try:
+        # Fetch the token using the Google OAuth2 provider
         token = await oauth.google.authorize_access_token(request)
-        logger.info(f"Token: {token}")
+        userinfo = token.get('userinfo')
+        if userinfo:
+            email = userinfo.get('email')
+            name = userinfo.get('name')
+            at_hash = userinfo.get('at_hash')
+        else:
+            print("Userinfo not found in token.")
+            logger.info(f"Token: {token}")
 
-        user_info = await oauth.google.parse_id_token(request, token)
-        logger.info(f"User Info: {user_info}")
+        if not token:
+            raise ValueError("Token not generated")
 
-        if request.session.get('oauth_state') != request.query_params.get('state'):
-            raise ValueError("Invalid state parameter")
+        try:
+            user_info = await oauth.google.parse_id_token(request, token)
+            print("got user info")
+            logger.info(f"User Info: {user_info}")
+            print(user_info)
+        except Exception as e:
+            logger.error(f"Error parsing token: {e}")
 
-        db_user = service.get_user_by_username(db, user_info['email'])
+        # Check if user exists in the database
+        db_user = service.get_user_by_username(db, email)
         if not db_user:
-            db_user = service.create_user(db, schemas.UserCreate(username=user_info['email'], password="hashed_password"))
+            db_user = service.create_user(db, schemas.UserCreate(username=name, email=email, password=at_hash))
+
         return {"message": "Login successful!", "id": db_user.id}
 
     except ValueError as ve:
