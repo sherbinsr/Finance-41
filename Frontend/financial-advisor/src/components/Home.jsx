@@ -1,18 +1,17 @@
 import React from "react";
-import { Navbar, Nav, Button, Container } from "react-bootstrap";
+import { Button, Container } from "react-bootstrap";
 import { Typography } from "@mui/material";
 import './Home.css';
 import About from './About';
 import ContactUs  from "./Contactus";
 import Footer from "./Footer";
+import UserAnalytics from "./UserAnalytics";
 
 
 const Home = () => {
   return (
     <div className="ct">
       <div className="app">
-        
-
         <div className="main-content">
           <Container className="text-center d-flex flex-column align-items-center">
             <Typography variant="h2" className="text-light text-center main-heading">
@@ -35,7 +34,12 @@ const Home = () => {
         <About/>
       </div>
       <div className="container">
+        <UserAnalytics/>
+      </div>
+      <br></br><br></br>
+      <div className="container">
         <ContactUs/>
+        <br></br> <br></br>
       </div>
       <div>
       <Footer/>

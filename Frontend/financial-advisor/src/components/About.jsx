@@ -6,7 +6,6 @@ function About() {
     return (
         <div className="container my-5">
         <div className="row align-items-center">
-              {/* Image Section */}
               <div className="col-lg-6 col-md-12 mb-4 mb-lg-0">
                 <img
                   src={about}
@@ -15,8 +14,6 @@ function About() {
                   style={{ borderRadius: "15px" }}
                 />
               </div>
-        
-              {/* Text Section */}
               <div className="col-lg-6 col-md-12 text-center text-lg-start">
               <h1 className="fw-bold text-danger">Unlock Smarter Financial Decisions with AI</h1>
                 <p style={{ fontSize: "16px", color: "#4f4f4f" }}>
