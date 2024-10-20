@@ -1,49 +1,73 @@
-import React, { useEffect, useState } from 'react';
-import UserService from '../Service/UserService'; 
-import { Line } from 'react-chartjs-2';
-import 'chart.js/auto';
+"use client"
 
-const UserAnalytics = () => {
-  const [userCount, setUserCount] = useState(0);
-  const [chartData, setChartData] = useState({
-    labels: [],
-    datasets: []
-  });
+import React, { useEffect, useState } from 'react'
+import CountUp from 'react-countup'
+import UserService from '../Service/UserService'
+import {
+  GaugeContainer,
+  GaugeValueArc,
+  GaugeReferenceArc,
+  useGaugeState,
+} from '@mui/x-charts/Gauge';
+
+export default function UserAnalytics() {
+  const [userCount, setUserCount] = useState(0)
 
   useEffect(() => {
     UserService.getUserCount()
       .then((count) => {
-        setUserCount(count);
-        console.log("User count: ", count);
-        generateChartData(count);
+        setUserCount(count)
       })
-      .catch((error) => console.error("Error fetching user count:", error));
-  }, []);
-
-  const generateChartData = (count) => {
-    setChartData({
-      labels: ['Users'],
-      datasets: [
-        {
-          label: 'User Activity Count',
-          data: [count],
-          backgroundColor: 'rgba(75, 192, 192, 0.6)',
-          borderColor: 'rgba(75, 192, 192, 1)',
-          borderWidth: 1,
-        },
-      ],
-    });
-  };
-
+      .catch((error) => console.error('Error fetching user count:', error))
+  }, [])
+  function GaugePointer() {
+    const { valueAngle, outerRadius, cx, cy } = useGaugeState();
+  
+    if (valueAngle === null) {
+      // No value to display
+      return null;
+    }
+  
+    const target = {
+      x: cx + outerRadius * Math.sin(valueAngle),
+      y: cy - outerRadius * Math.cos(valueAngle),
+    };
+    return (
+      <g>
+        <circle cx={cx} cy={cy} r={5} fill="red" />
+        <path
+          d={`M ${cx} ${cy} L ${target.x} ${target.y}`}
+          stroke="red"
+          strokeWidth={3}
+        />
+      </g>
+    );
+  }
   return (
-    <div>
-      <h2>Total Users: {userCount}</h2>
-      {/* Render Line chart only when chartData is available */}
-      {chartData && chartData.datasets.length > 0 && (
-        <Line data={chartData} />
-      )}
+    <div className="container mx-auto p-4">
+      <div className="grid gap-6 md:grid-cols-2">
+        <div className="border p-4 rounded-md shadow-sm">
+        <div class="d-flex justify-content-around">
+          <div class="p-2"><h2 className="text-xl font-semibold">Total Users</h2>
+          <p className="text-gray-500">Current number of registered users</p>
+          <h2 className="text-4xl font-bold mt-4">
+            <CountUp end={userCount} duration={2.5} />+
+          </h2></div>
+        <div class="p-2">
+          <GaugeContainer
+           width={200}
+            height={200}
+            startAngle={-110}
+            endAngle={110}
+          value={userCount}>
+          <GaugeReferenceArc />
+         <GaugeValueArc />
+        <GaugePointer />
+        </GaugeContainer>
+        </div>
+        </div>
+        </div>
+      </div>
     </div>
-  );
-};
-
-export default UserAnalytics;
+  )
+}
