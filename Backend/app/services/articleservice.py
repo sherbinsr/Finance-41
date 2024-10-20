@@ -1,5 +1,6 @@
 from sqlalchemy.orm import Session
-from .. import models, schemas
+from  app.dto import  schemas
+from app.entity import models
 
 def get_articles(db: Session):
     return db.query(models.Article).all()
