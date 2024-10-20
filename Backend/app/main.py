@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException,Request
 from sqlalchemy.orm import Session
 import logging
-from . import  secrets
+from app.config import secrets
 from  app.dto import  schemas
 from .services import articleservice, service
 from .database import engine, Base, get_db
