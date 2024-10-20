@@ -1,6 +1,7 @@
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
-from ..import models, schemas
+from  app.dto import  schemas
+from app.entity import models
 import logging
 import  requests
 import aiosqlite
