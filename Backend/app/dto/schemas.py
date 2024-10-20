@@ -21,6 +21,9 @@ class ShowUser(BaseModel):
 class User(BaseModel):
     name: str
     email: str
+class UserCountResponse(BaseModel):
+    user_count: int
+
 class ArticleBase(BaseModel):
     title: str
     content: str

@@ -179,3 +179,8 @@ def get_articles(db: Session = Depends(get_db)):
     except Exception as e:
         logger.error(str(e))
         raise HTTPException(status_code=500, detail="Unable to fetch article trends")
+
+@app.get("/user-count", response_model=schemas.UserCountResponse)
+async def get_user_count(db: Session = Depends(get_db)):
+    user_count = service.get_user_count_from_db(db=db)
+    return {"user_count": user_count}
