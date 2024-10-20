@@ -15,6 +15,7 @@ function App() {
       <Topbar/>
       <Routes>      
       <Route path="/" element={<Home/>} />
+      <Route path="/auth" element={<Home/>} />
       <Route path="/chatbot" element={<Chatbot />} />
       <Route path="/register" element={<Register />} />
       <Route path="/login" element={<Login />} />

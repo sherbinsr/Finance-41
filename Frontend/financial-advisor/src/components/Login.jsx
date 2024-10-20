@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { AuthService } from '../Service/LoginService';
 import { useNavigate, Link } from 'react-router-dom'; // Import Link
+import GoogleSSOLogin from './GoogleSSOLogin';
 
 function Login() {
   const [username, setUsername] = useState('');
@@ -66,6 +67,7 @@ function Login() {
         <p className="text-center mt-3">
           New user? <Link to="/register">Register</Link>
         </p>
+        <GoogleSSOLogin/>
       </div>
     </div>
   );
