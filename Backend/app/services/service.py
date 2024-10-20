@@ -14,6 +14,7 @@ import os
 from dotenv import load_dotenv
 from groq import Groq
 from fastapi import HTTPException
+from sqlalchemy import  func
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -164,6 +165,12 @@ def is_financial_query(query: str) -> bool:
     ]
     return any(keyword in query.lower() for keyword in financial_keywords)
 
-# Funtion to sort out the latest news
+# Function to sort out the latest news
 def get_latest_articles(db: Session):
     return db.query(models.Article).order_by(models.Article.created_at.desc()).limit(10).all()
+
+# Function to get user active count from database
+def get_user_count_from_db(db: Session):
+    user_count = db.query(func.count(models.User.id)).scalar()
+    return user_count
+
