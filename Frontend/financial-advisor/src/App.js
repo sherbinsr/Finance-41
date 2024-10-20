@@ -7,7 +7,7 @@ import Home  from './components/Home'
 import ContactUs  from './components/Contactus';
 import News from './components/News';
 import Topbar  from './components/Topbar';
-import UserAnalytics from './components/UserAnalytics';
+
 
 
 function App() {
@@ -21,7 +21,6 @@ function App() {
       <Route path="/login" element={<Login />} />
       <Route path="/home/:id" element={<Home />} />
       <Route path="/contactus" element={<ContactUs/>}/> 
-      <Route path="/users" element={<UserAnalytics/>}/> 
       <Route path="/news" element={<News/>}/> 
       </Routes>
     </Router>

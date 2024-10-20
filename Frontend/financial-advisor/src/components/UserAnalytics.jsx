@@ -45,18 +45,21 @@ export default function UserAnalytics() {
   }
   return (
     <div className="container mx-auto p-4">
+          <h1 className="fw-bold text-center text-danger">User History</h1>
+          <br></br>
       <div className="grid gap-6 md:grid-cols-2">
         <div className="border p-4 rounded-md shadow-sm">
         <div class="d-flex justify-content-around">
-          <div class="p-2"><h2 className="text-xl font-semibold">Total Users</h2>
+          <div class="p-2">
+            <h2 className="text-xl font-semibold">Total Users</h2>
           <p className="text-gray-500">Current number of registered users</p>
-          <h2 className="text-4xl font-bold mt-4">
+          <h2 className="fw-bold mt-4 ">
             <CountUp end={userCount} duration={2.5} />+
           </h2></div>
         <div class="p-2">
           <GaugeContainer
-           width={200}
-            height={200}
+           width={100}
+            height={100}
             startAngle={-110}
             endAngle={110}
           value={userCount}>

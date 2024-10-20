@@ -1,9 +1,6 @@
 import React from 'react';
 
-import { useNavigate } from 'react-router-dom';
-
 function  GoogleSSOLogin() {
-  const navigate = useNavigate();
   const handleLogin = () => {
     window.open("http://127.0.0.1:8000/sso-login", "_self");
    
