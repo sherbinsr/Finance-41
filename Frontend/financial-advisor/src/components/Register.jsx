@@ -16,13 +16,9 @@ const Register = () => {
     try {
       await registerUser(username, email, password); // Use the service
 
-      // Set success message and clear form fields
       setMessage("Registration successful!");
       setAlertType("success");
-
-      // Navigate to /login after successful registration
       navigate('/login'); 
-
       setUsername("");
       setEmail("");
       setPassword("");

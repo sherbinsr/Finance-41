@@ -37,7 +37,7 @@ const News = () => {
   return (
     <Container maxWidth="lg">
       <h2 variant="h2" class="text-center fw-bold text-danger"  component="div" style={{ marginTop: 40, marginBottom: 20 }}>
-        News Section
+        Market News
       </h2>
       
       <Box  sx={{ borderBottom: 1, borderColor: 'divider' }}>
