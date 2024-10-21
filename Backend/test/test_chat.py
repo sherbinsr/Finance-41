@@ -13,7 +13,7 @@ def mock_generate_advice():
     with patch("app.services.service.generate_advice") as mock:
         yield mock
 
-def test_chat_success(mock_generate_advice):
+def test_chat(mock_generate_advice):
     mock_generate_advice.return_value = "This is a test response"
     query = {"message": "What is the best investment plan?"}
     response = client.post("/chat", json=query)
