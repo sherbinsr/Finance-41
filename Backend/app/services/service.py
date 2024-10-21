@@ -1,3 +1,5 @@
+import asyncio
+
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from  app.dto import  schemas
@@ -23,14 +25,15 @@ logger = logging.getLogger(__name__)
 
 DATABASE = "finance.db"
 
+# Load environment variables from the .env file
+load_dotenv()
+
 # Email configuration
 SMTP_SERVER = "smtp.gmail.com"
 SMTP_PORT = 587  # For TLS
-SMTP_USER = os.environ.get("email_user")
-SMTP_PASSWORD = os.environ.get("email_password")
+SMTP_USER = os.environ.get("EMAIL_USER")
+SMTP_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 
-# Load environment variables from the .env file
-load_dotenv()
 
 # Groq client with your API key from the environment variable
 client = Groq(
@@ -64,7 +67,7 @@ def verify_password(plain_password, hashed_password):
     return pwd_context.verify(plain_password, hashed_password)
 
 # Function to Check Market Trends
-def fetch_market_trends():
+async def fetch_market_trends():
     # API URL
     url = "https://indian-stock-exchange-api2.p.rapidapi.com/trending"
 
@@ -101,11 +104,23 @@ async def send_email(recipient: str, trends: List[str]):
     msg['Subject'] = subject
     msg.attach(MIMEText(body, 'plain'))
 
-    # Send the email
-    with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
-        server.starttls()  # Upgrade to a secure connection
-        server.login(SMTP_USER, SMTP_PASSWORD)
-        server.sendmail(SMTP_USER, recipient, msg.as_string())
+    if not SMTP_USER or not SMTP_PASSWORD:
+        logger.error("SMTP_USER or SMTP_PASSWORD is not set.")
+        raise ValueError("SMTP credentials are missing!")
+
+    try:
+        # Send the email
+        with smtplib.SMTP(SMTP_SERVER, SMTP_PORT) as server:
+            server.starttls()
+            server.login(SMTP_USER, SMTP_PASSWORD)
+            server.sendmail(SMTP_USER, recipient, msg.as_string())
+        logger.info(f"Email sent to {recipient}")
+    except smtplib.SMTPAuthenticationError as e:
+        logger.error(f"Failed to authenticate with SMTP server: {e}")
+        raise
+    except Exception as BatchJobException:
+        logger.error(f"Failed to send email: {BatchJobException}")
+        raise  BatchJobException("unable to stop batch jobs")
 
 # Batch Function to send batch jobs
 async def send_market_trends(trends: List[str]):
@@ -122,7 +137,7 @@ async def send_trends_task():
 # Task scheduler for batch jobs
 def schedule_task():
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(send_trends_task, 'cron', hour=11, minute=00)
+    scheduler.add_job(lambda: asyncio.create_task(send_trends_task()), 'cron', hour=11, minute=00)  # Wrap the task in asyncio.create_task()
     scheduler.start()
     logger.info("Scheduling the task")
 

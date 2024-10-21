@@ -16,11 +16,8 @@ from fastapi.responses import RedirectResponse
 import os
 from dotenv import load_dotenv
 from starlette.middleware.sessions import SessionMiddleware
-import tracemalloc
+from apscheduler.schedulers.asyncio import AsyncIOScheduler
 
-
-# Traces memory
-tracemalloc.start()
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -132,9 +129,8 @@ async def auth(request: Request, db: Session = Depends(get_db)):
 # API for send batch jobs
 @app.get("/send_market_trends")
 async def send_market_trends_endpoint(background_tasks: BackgroundTasks):
-    background_tasks.add_task(service.send_trends_task())
-    service.schedule_task()
-    asyncio.get_event_loop().run_forever()
+    background_tasks.add_task(service.send_trends_task)  # Pass the function reference, not the call
+    service.schedule_task()  # Schedule future tasks
     return JSONResponse(content={"message": "Market trends are being sent to users."})
 
 # API for terminating batch jobs
@@ -143,11 +139,12 @@ async def stop_batch_jobs():
     logger.debug("stop sending batch jobs")
     try:
         asyncio.get_event_loop().stop()
+        scheduler = AsyncIOScheduler()
+        scheduler.shutdown()
         logger.info("Batch job stoped")
         return {"message": "stopped scheduling batch jobs"}
     except Exception as BatchJobException:
         raise BatchJobException("unable to stop batch jobs")
-
 # API for chatbot interaction
 @app.post("/chat")
 async def chat(query: Query):
