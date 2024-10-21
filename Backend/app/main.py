@@ -10,13 +10,17 @@ from fastapi import FastAPI, BackgroundTasks
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import asyncio
-from .exceptions import ChatServiceException
+from .exceptions import ChatServiceException,BatchJobException
 from authlib.integrations.starlette_client import OAuth
 from fastapi.responses import RedirectResponse
 import os
 from dotenv import load_dotenv
 from starlette.middleware.sessions import SessionMiddleware
+import tracemalloc
 
+
+# Traces memory
+tracemalloc.start()
 
 # Load environment variables from the .env file
 load_dotenv()
@@ -93,7 +97,7 @@ async def google_login(request: Request):
     redirect_uri = request.url_for("auth")
     logger.debug(f"Redirect URI: {redirect_uri}")
     return await oauth.google.authorize_redirect(request, redirect_uri)
-
+# API for google sso-auth
 @app.get("/auth")
 async def auth(request: Request, db: Session = Depends(get_db)):
     try:
@@ -133,7 +137,18 @@ async def send_market_trends_endpoint(background_tasks: BackgroundTasks):
     asyncio.get_event_loop().run_forever()
     return JSONResponse(content={"message": "Market trends are being sent to users."})
 
-# API route for chatbot interaction
+# API for terminating batch jobs
+@app.get("/stop_batch")
+async def stop_batch_jobs():
+    logger.debug("stop sending batch jobs")
+    try:
+        asyncio.get_event_loop().stop()
+        logger.info("Batch job stoped")
+        return {"message": "stopped scheduling batch jobs"}
+    except Exception as BatchJobException:
+        raise BatchJobException("unable to stop batch jobs")
+
+# API for chatbot interaction
 @app.post("/chat")
 async def chat(query: Query):
     logger.debug("Generating response from grok API")
@@ -145,13 +160,13 @@ async def chat(query: Query):
         logger.error(f"Error generating response: {str(e)}")
         raise ChatServiceException(detail="Failed to generate chat response")
 
-# Route to add a new article
+# API to add a new article
 @app.post("/addarticle", response_model=schemas.Article)
 def create_article(article: schemas.ArticleCreate, db: Session = Depends(get_db)):
     logger.debug("adding a new article to database")
     return articleservice.create_article(db=db, article=article)
 
-# Route to get all articles
+# API to get all articles
 @app.get("/getarticles", response_model=list[schemas.Article])
 def get_articles(db: Session = Depends(get_db)):
     try:
@@ -160,7 +175,8 @@ def get_articles(db: Session = Depends(get_db)):
     except Exception as e:
         logger.error(str(e))
         raise HTTPException(status_code=500, detail="unable to fetch articles trends")
-# Route Api for market-trends
+
+# Api for market-trends
 @app.get("/market-trends")
 def get_market_trends():
     try:
@@ -170,6 +186,7 @@ def get_market_trends():
         logger.error(str(e))
         raise HTTPException(status_code=500, detail="Error fetching market trends")
 
+#API to get the latestArticles
 @app.get("/getlatestarticles", response_model=list[schemas.Article])
 def get_articles(db: Session = Depends(get_db)):
     try:
@@ -180,6 +197,7 @@ def get_articles(db: Session = Depends(get_db)):
         logger.error(str(e))
         raise HTTPException(status_code=500, detail="Unable to fetch article trends")
 
+#API to get user activity
 @app.get("/user-count", response_model=schemas.UserCountResponse)
 async def get_user_count(db: Session = Depends(get_db)):
     user_count = service.get_user_count_from_db(db=db)
