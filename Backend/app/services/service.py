@@ -160,8 +160,19 @@ def generate_advice(user_input: str) -> str:
 def is_financial_query(query: str) -> bool:
     # Simple check for financial keywords (can be improved using NLP libraries like spaCy)
     financial_keywords = [
-        "budget", "saving", "investing", "retirement",
-        "tax", "debt", "finance", "interest", "loan", "wealth", "credit", "savings"
+        "budget", "saving", "investing", "retirement", "tax", "debt", "finance",
+        "interest", "loan", "wealth", "credit", "savings", "mortgage", "insurance",
+        "capital", "expense", "income", "liability", "asset", "equity", "bond",
+        "dividend", "portfolio", "stock", "mutual fund", "ETF", "real estate",
+        "cash flow", "ROI", "yield", "appreciation", "depreciation", "bankruptcy",
+        "inflation", "recession", "subsidy", "forex", "derivatives", "liquidity",
+        "capital gains", "annuities", "hedging", "index fund", "pension", "treasury",
+        "futures", "commodities", "microfinance", "payment", "transaction",
+        "currency", "financial planning", "trust fund", "brokerage", "private equity",
+        "venture capital", "diversification", "risk management", "tax shelter",
+        "credit score", "credit card", "debit card", "sinking fund", "escrow",
+        "cash reserve", "money market", "fixed income", "variable rate",
+        "payroll", "audit", "fundraising", "crowdfunding"
     ]
     return any(keyword in query.lower() for keyword in financial_keywords)
 
