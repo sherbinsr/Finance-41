@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { AuthService } from '../Service/LoginService';
+import { AuthService } from '../../Service/LoginService';
 import { useNavigate, Link } from 'react-router-dom'; // Import Link
 import GoogleSSOLogin from './GoogleSSOLogin';
 

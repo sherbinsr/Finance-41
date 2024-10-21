@@ -1,12 +1,12 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import Chatbot from './components/Chatbot';
-import Register from './components/Register';
-import Login  from './components/Login';
-import Home  from './components/Home'
-import ContactUs  from './components/Contactus';
-import News from './components/News';
-import Topbar  from './components/Topbar';
+import Chatbot from './components/ChatBot/Chatbot';
+import Register from './components/Register/Register';
+import Login  from './components/Login/Login';
+import Home  from './components/Home/Home'
+import ContactUs  from './components/Contactus/Contactus';
+import News from './components/News/News';
+import Topbar  from './components/Topbar/Topbar';
 
 
 

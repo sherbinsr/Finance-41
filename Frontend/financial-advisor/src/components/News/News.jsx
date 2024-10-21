@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Card, CardContent, Typography, CircularProgress, Container, Tabs, Tab, Box, Grid } from '@mui/material';
-import NewsService from '../Service/NewsService'; 
+import NewsService from '../../Service/NewsService'; 
 
 const News = () => {
   const [articles, setArticles] = useState([]);
