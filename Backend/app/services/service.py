@@ -40,7 +40,6 @@ client = Groq(
     api_key=os.environ.get("GROK_API_KEY"),
 )
 
-
 # Function to hash the password
 def get_password_hash(password: str):
     logger.debug("Hashing the password %s",password)
@@ -77,14 +76,12 @@ async def fetch_market_trends():
     }
 
     logger.debug("getting market trends")
-    # Sending GET request
     response = requests.get(url, headers=headers)
-
-    # Checking for successful response
     if response.status_code == 200:
         data = response.json()
-    logger.info("Returning Market Trends")
-    return data
+        top_gainers = data.get("trending_stocks", {}).get("top_gainers", [])
+    logger.info("Returning Top Gainers")
+    return top_gainers
 # Function to get user emails
 async def get_users():
     async with aiosqlite.connect(DATABASE) as db:
@@ -94,10 +91,16 @@ async def get_users():
             return [row[0] for row in rows]
 
 # Function to Send emails for batch jobs
-async def send_email(recipient: str, trends: List[str]):
+async def send_email(recipient: str, trends: List[dict]):
     subject = "Latest Market Trends"
-    body = "\n".join(trends)
+    # Format the Dict to a readable string
+    body_lines = []
+    for trend in trends:
+        body_lines.append(f"Company: {trend['company_name']}, Price: {trend['price']}, Change: {trend['percent_change']}%")
+    body = "\n".join(body_lines)
+    logger.debug(f"Email body constructed: {body}")
 
+    print(trends)
     msg = MIMEMultipart()
     msg['From'] = SMTP_USER
     msg['To'] = recipient
@@ -123,7 +126,7 @@ async def send_email(recipient: str, trends: List[str]):
         raise  BatchJobException("unable to stop batch jobs")
 
 # Batch Function to send batch jobs
-async def send_market_trends(trends: List[str]):
+async def send_market_trends(trends: List[dict]):
     users = await get_users()
     for user in users:
         await send_email(user, trends)
@@ -145,16 +148,16 @@ def schedule_task():
 def generate_advice(user_input: str) -> str:
 
     try:
-        # Check if the user input is financial in nature
+        # Check if the user input is financial
         if not is_financial_query(user_input):
             return "I'm here to help with financial questions. Please ask me about budgeting, saving, investing, retirement planning, taxes, or debt management."
 
-        # Updated API call for chat completion
+
         chat_completion = client.chat.completions.create(
-            model="llama3-8b-8192",  # Ensure model name is correct
+            model="llama3-8b-8192",
             messages=[
                 {
-                    "role": "system",  # System instructions to the assistant
+                    "role": "system",
                     "content": "You are a financial advisor AI. Your responses must be simple and no longer than 3 lines. Only provide advice on personal finance topics such as budgeting, saving, investing, retirement planning, taxes, and debt management. Do not answer questions that are not related to finance. Always ensure your advice is practical, easy to understand, and tailored to individual needs. Provide strategies for both short-term and long-term financial goals."
                 },
                 {
@@ -163,8 +166,6 @@ def generate_advice(user_input: str) -> str:
                 }
             ]
         )
-
-        # Return the content of the first choice message
         return chat_completion.choices[0].message.content
 
     except Exception as e:
