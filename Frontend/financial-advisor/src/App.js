@@ -7,6 +7,7 @@ import Home  from './components/Home/Home'
 import ContactUs  from './components/Contactus/Contactus';
 import News from './components/News/News';
 import Topbar  from './components/Topbar/Topbar';
+import NotFound from './components/NotFound/NotFound';
 
 
 
@@ -22,6 +23,7 @@ function App() {
       <Route path="/home/:id" element={<Home />} />
       <Route path="/contactus" element={<ContactUs/>}/> 
       <Route path="/news" element={<News/>}/> 
+      <Route path="/404" element={<NotFound/>}/> 
       </Routes>
     </Router>
   );
