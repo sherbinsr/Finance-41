@@ -175,9 +175,9 @@ def get_articles(db: Session = Depends(get_db)):
 
 # Api for market-trends
 @app.get("/market-trends")
-def get_market_trends():
+async def get_market_trends():
     try:
-        data = service.fetch_market_trends()
+        data = await service.fetch_market_trends()
         return data
     except Exception as e:
         logger.error(str(e))
