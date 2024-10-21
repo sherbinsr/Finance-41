@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
-import registerUser from "../Service/RegisterService"; // Import the service
+import registerUser from "../../Service/RegisterService"; // Import the service
 
 const Register = () => {
   const [username, setUsername] = useState("");

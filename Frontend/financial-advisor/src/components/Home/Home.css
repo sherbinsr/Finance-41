@@ -11,7 +11,7 @@
 .main-content {
   background-image: 
     linear-gradient(to bottom, rgba(255, 255, 255, 0) 70%, rgba(0, 0, 0, 0.7)), 
-    url('../assets/bg2.jpg'); /* Replace with actual path */
+    url('../../assets/bg2.jpg'); /* Replace with actual path */
   background-size: cover;
   background-position: center;
   height: 100%;

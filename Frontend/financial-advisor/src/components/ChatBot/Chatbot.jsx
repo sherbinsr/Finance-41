@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { ChatService } from '../Service/ChatService';
+import { ChatService } from '../../Service/ChatService';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './Chatbot.css';
 

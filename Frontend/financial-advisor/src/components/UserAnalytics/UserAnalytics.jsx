@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import CountUp from 'react-countup'
-import UserService from '../Service/UserService'
+import UserService from '../../Service/UserService'
 import {
   GaugeContainer,
   GaugeValueArc,
@@ -58,8 +58,8 @@ export default function UserAnalytics() {
           </h2></div>
         <div class="p-2">
           <GaugeContainer
-           width={100}
-            height={100}
+           width={200}
+            height={200}
             startAngle={-110}
             endAngle={110}
           value={userCount}>

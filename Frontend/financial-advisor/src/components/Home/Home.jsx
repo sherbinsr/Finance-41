@@ -1,11 +1,11 @@
 import React from "react";
 import { Button, Container } from "react-bootstrap";
 import { Typography } from "@mui/material";
-import './Home.css';
-import About from './About';
-import ContactUs  from "./Contactus";
-import Footer from "./Footer";
-import UserAnalytics from "./UserAnalytics";
+import '../Home/Home.css';
+import About from '../About/About';
+import ContactUs  from "../Contactus/Contactus";
+import Footer from "../Footer/Footer";
+import UserAnalytics from "../UserAnalytics/UserAnalytics";
 
 
 const Home = () => {
