@@ -100,7 +100,6 @@ async def send_email(recipient: str, trends: List[dict]):
     body = "\n".join(body_lines)
     logger.debug(f"Email body constructed: {body}")
 
-    print(trends)
     msg = MIMEMultipart()
     msg['From'] = SMTP_USER
     msg['To'] = recipient
@@ -140,7 +139,7 @@ async def send_trends_task():
 # Task scheduler for batch jobs
 def schedule_task():
     scheduler = AsyncIOScheduler()
-    scheduler.add_job(lambda: asyncio.create_task(send_trends_task()), 'cron', hour=11, minute=00)  # Wrap the task in asyncio.create_task()
+    scheduler.add_job(lambda: asyncio.create_task(send_trends_task()), 'cron', hour=11, minute=00)
     scheduler.start()
     logger.info("Scheduling the task")
 
