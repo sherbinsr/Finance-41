@@ -216,3 +216,16 @@ async def market_details():
         data = response.json()
     logger.info("Returning Top Gainers")
     return data
+
+# function to get stock information
+def get_stock_info(name: str):
+    url = "https://indian-stock-exchange-api2.p.rapidapi.com/stock"
+    headers = {
+        "x-rapidapi-key": os.environ.get("RAPIDAPI_KEY"),
+        "x-rapidapi-host": "indian-stock-exchange-api2.p.rapidapi.com"
+    }
+
+    querystring = {"name": name}
+    response = requests.get(url, headers=headers, params=querystring)
+    response.raise_for_status() 
+    return response.json()
