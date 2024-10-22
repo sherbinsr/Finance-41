@@ -9,3 +9,4 @@ groq
 apscheduler
 authlib
 starlette
+spacy
