@@ -1,6 +1,7 @@
 from fastapi import FastAPI, Depends, HTTPException,Request
 from sqlalchemy.orm import Session
 import logging
+import  requests
 from app.config import secrets
 from  app.dto import  schemas
 from .services import articleservice, service
@@ -205,3 +206,12 @@ async def get_user_count(db: Session = Depends(get_db)):
     user_count = service.get_user_count_from_db(db=db)
     return {"user_count": user_count}
 
+@app.get("/stock")
+def get_stock(name: str):
+    try:
+        stock_info = service.get_stock_info(name)
+        return stock_info
+    except requests.exceptions.HTTPError as http_err:
+        raise HTTPException(status_code=http_err.response.status_code, detail=str(http_err))
+    except Exception as err:
+        raise HTTPException(status_code=500, detail=str(err))
