@@ -27,7 +27,7 @@ Finance-41 is a financial advisor application that leverages GenAI technology to
 
 - Python 3.x
 - Node.js
-- PostgreSQL
+- Sqlite
 
 ### Backend Setup
 
