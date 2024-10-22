@@ -204,3 +204,4 @@ def get_articles(db: Session = Depends(get_db)):
 async def get_user_count(db: Session = Depends(get_db)):
     user_count = service.get_user_count_from_db(db=db)
     return {"user_count": user_count}
+
