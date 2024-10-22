@@ -34,7 +34,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "dev":"PORT=3000 PUBLIC_URL=/absproxy/3000 WDS_SOCKET_PATH=/absproxy/3000/sockjs-node BROWSER=none"
+    "dev": "cross-env PORT=3000 PUBLIC_URL=/absproxy/3000 WDS_SOCKET_PATH=/absproxy/3000/sockjs-node BROWSER=none react-scripts start"
   },
   "eslintConfig": {
     "extends": [
@@ -53,5 +53,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
   }
 }
