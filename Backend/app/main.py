@@ -166,7 +166,7 @@ async def chat(query: Query):
 @app.post("/addarticle", response_model=schemas.Article)
 def create_article(article: schemas.ArticleCreate, db: Session = Depends(get_db)):
     logger.debug("adding a new article to database")
-    return articleservice.create_article(db=db, article=article)
+    return articleservice.create_article(db=db,article=article)
 
 # API to get all articles
 @app.get("/getarticles", response_model=list[schemas.Article])
@@ -182,7 +182,7 @@ def get_articles(db: Session = Depends(get_db)):
 @app.get("/market-trends")
 async def get_market_trends():
     try:
-        data = await service.fetch_market_trends()
+        data = await service.market_details()
         return data
     except Exception as e:
         logger.error(str(e))
