@@ -10,3 +10,5 @@ apscheduler
 authlib
 starlette
 spacy
+python-dotenv
+aiosqlite
