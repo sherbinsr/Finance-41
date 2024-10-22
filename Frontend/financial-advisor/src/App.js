@@ -9,6 +9,7 @@ import News from './components/News/News';
 import Topbar  from './components/Topbar/Topbar';
 import NotFound from './components/NotFound/NotFound';
 import MarketTrends from './components/MarketTrends/MarketTrends'
+import StockInfo from './components/MarketTrends/StockInfo';
 
 
 function App() {
@@ -24,6 +25,7 @@ function App() {
       <Route path="/contactus" element={<ContactUs/>}/> 
       <Route path="/news" element={<News/>}/> 
       <Route path="/trends" element={<MarketTrends/>}/> 
+      <Route path="/stockinfo" element={<StockInfo/>}/> 
       <Route path="/404" element={<NotFound/>}/> 
       </Routes>
     </Router>
