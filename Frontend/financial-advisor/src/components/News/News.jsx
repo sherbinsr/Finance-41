@@ -31,26 +31,38 @@ const News = () => {
     setTabValue(newValue); 
   };
 
-  if (loading) return <CircularProgress />;
+  if (loading) return (
+    <Box 
+      sx={{
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: '100vh', // Full height of the viewport
+      }}
+    >
+      <CircularProgress />
+    </Box>
+  );
+
   if (error) return <div>{error}</div>;
 
   return (
     <Container maxWidth="lg">
-      <h2 variant="h2" class="text-center fw-bold text-danger"  component="div" style={{ marginTop: 40, marginBottom: 20 }}>
+      <h2 variant="h2" className="text-center fw-bold text-danger" component="div" style={{ marginTop: 40, marginBottom: 20 }}>
         Market News
       </h2>
       
-      <Box  sx={{ borderBottom: 1, borderColor: 'divider' }}>
-        <Tabs  value={tabValue} onChange={handleTabChange} aria-label="news tabs">
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Tabs value={tabValue} onChange={handleTabChange} aria-label="news tabs">
           <Tab label="All News" />
           <Tab label="Latest News" />
         </Tabs>
       </Box>
       
       {articles.length > 0 ? (
-        <Grid container spacing={3} style={{ marginTop: 20 }}> {/* Grid container with spacing */}
+        <Grid container spacing={3} style={{ marginTop: 20 }}>
           {articles.map((article) => (
-            <Grid item xs={12} sm={6} key={article.id}> {/* xs=12 for full width on small screens, sm=6 for two columns */}
+            <Grid item xs={12} sm={6} key={article.id}>
               <Card style={{ padding: 20, backgroundColor: '#f5f5f5' }}>
                 <CardContent>
                   <Typography variant="h5" component="div">

@@ -125,9 +125,10 @@ const ContactUs = () => {
             required
           />
         </div>
-
+        <br></br>
         <div className="text-center">
-          <button type="submit" className="btn btn-dark btn-sm">Let's talk</button>
+          <button type="submit" className="btn btn-dark btn-lx">Let's talk</button>
+          <br></br>
         </div>
       </form>
     </div>
