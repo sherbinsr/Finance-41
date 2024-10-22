@@ -13,3 +13,4 @@ spacy
 python-dotenv
 aiosqlite
 itsdangerous
+spacy==3.5.3  # Ensure to run `python -m spacy download en_core_web_sm` after installation
