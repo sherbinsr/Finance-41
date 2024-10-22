@@ -1,5 +1,4 @@
 import asyncio
-
 from sqlalchemy.orm import Session
 from passlib.context import CryptContext
 from  app.dto import  schemas
@@ -65,8 +64,8 @@ def verify_password(plain_password, hashed_password):
     logger.info("Attempting to verify password")
     return pwd_context.verify(plain_password, hashed_password)
 
-# Function to Check Market Trends
-async def fetch_market_trends():
+# Function to Market Trends
+async def market_trends():
     # API URL
     url = "https://indian-stock-exchange-api2.p.rapidapi.com/trending"
 
@@ -82,6 +81,7 @@ async def fetch_market_trends():
         top_gainers = data.get("trending_stocks", {}).get("top_gainers", [])
     logger.info("Returning Top Gainers")
     return top_gainers
+
 # Function to get user emails
 async def get_users():
     async with aiosqlite.connect(DATABASE) as db:
@@ -132,7 +132,7 @@ async def send_market_trends(trends: List[dict]):
 
 # Background task to run the batch job
 async def send_trends_task():
-    trends = await fetch_market_trends()
+    trends = await market_trends()
     logger.info("Sending Market Information to Users")
     await send_market_trends(trends)
 
@@ -200,3 +200,19 @@ def get_user_count_from_db(db: Session):
     user_count = db.query(func.count(models.User.id)).scalar()
     return user_count
 
+# Function to fetch Market details
+async def market_details():
+    # API URL
+    url = "https://indian-stock-exchange-api2.p.rapidapi.com/trending"
+
+    headers = {
+        "x-rapidapi-key": os.environ.get("RAPIDAPI_KEY"),
+        "x-rapidapi-host": "indian-stock-exchange-api2.p.rapidapi.com"
+    }
+
+    logger.debug("getting market details")
+    response = requests.get(url, headers=headers)
+    if response.status_code == 200:
+        data = response.json()
+    logger.info("Returning Top Gainers")
+    return data
