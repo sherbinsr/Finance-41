@@ -16,6 +16,7 @@ from dotenv import load_dotenv
 from groq import Groq
 from fastapi import HTTPException
 from sqlalchemy import  func
+import spacy
 
 pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
@@ -33,11 +34,13 @@ SMTP_PORT = 587  # For TLS
 SMTP_USER = os.environ.get("EMAIL_USER")
 SMTP_PASSWORD = os.environ.get("EMAIL_PASSWORD")
 
-
 # Groq client with your API key from the environment variable
 client = Groq(
     api_key=os.environ.get("GROK_API_KEY"),
 )
+
+# Load  NLP model
+nlp = spacy.load("en_core_web_sm")
 
 # Function to hash the password
 def get_password_hash(password: str):
@@ -173,7 +176,6 @@ def generate_advice(user_input: str) -> str:
 
 # Function to Check the does the query is related to Finance
 def is_financial_query(query: str) -> bool:
-    # Simple check for financial keywords (can be improved using NLP libraries like spaCy)
     financial_keywords = [
         "budget", "saving", "investing", "retirement", "tax", "debt", "finance",
         "interest", "loan", "wealth", "credit", "savings", "mortgage", "insurance",
@@ -189,7 +191,13 @@ def is_financial_query(query: str) -> bool:
         "cash reserve", "money market", "fixed income", "variable rate",
         "payroll", "audit", "fundraising", "crowdfunding"
     ]
-    return any(keyword in query.lower() for keyword in financial_keywords)
+    doc = nlp(query.lower())
+    for token in doc:
+        if token.text in financial_keywords:
+            return True
+
+    return False
+
 
 # Function to sort out the latest news
 def get_latest_articles(db: Session):
@@ -227,5 +235,5 @@ def get_stock_info(name: str):
 
     querystring = {"name": name}
     response = requests.get(url, headers=headers, params=querystring)
-    response.raise_for_status() 
+    response.raise_for_status()
     return response.json()
