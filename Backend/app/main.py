@@ -215,3 +215,33 @@ def get_stock(name: str):
         raise HTTPException(status_code=http_err.response.status_code, detail=str(http_err))
     except Exception as err:
         raise HTTPException(status_code=500, detail=str(err))
+
+@app.post("/analyze")
+def analyze_portfolio(portfolio: schemas.Portfolio):
+    total_value = 0
+    portfolio_data = {
+        "portfolio": []
+    }
+
+    # Prepare portfolio data using the existing schema
+    for item in portfolio.items:
+        total_value += item.quantity * item.price
+        portfolio_data["portfolio"].append({
+            "symbol": item.symbol,
+            "quantity": item.quantity,
+            "price": item.price
+        })
+
+    # Use the GroqService to analyze portfolio risk
+    try:
+        risk_analysis = service.analyze_portfolio(portfolio_data)
+    except Exception as e:
+        return {"error": f"Error analyzing portfolio: {str(e)}"}
+
+    analysis = {
+        "total_value": total_value,
+        "total_items": len(portfolio.items),
+        "risk_analysis": risk_analysis
+    }
+
+    return analysis
