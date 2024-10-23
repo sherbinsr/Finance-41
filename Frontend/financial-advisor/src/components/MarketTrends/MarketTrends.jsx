@@ -1,5 +1,3 @@
-// src/MarketTrends.js
-
 import React, { useEffect, useState } from 'react';
 import {
   Container,
@@ -14,7 +12,7 @@ import {
   Grid
 } from '@mui/material';
 import { fetchMarketData } from '../../Service/marketTrendsService'; 
-import StockInfo from './StockInfo'; // Import the StockInfo component
+import StockInfo from './StockInfo'; 
 
 const MarketTrends = () => {
   const [marketData, setMarketData] = useState(null);
