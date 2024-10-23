@@ -13,6 +13,7 @@ def mock_db_session():
     db = MagicMock(spec=Session)
     return db
 
+# Test to register a user
 def test_register_success(mock_db_session):
     service.get_user_by_username = MagicMock(return_value=None)
     mock_user = schemas.ShowUser(id=1, username="testuser", email="test@example.com")
@@ -30,6 +31,7 @@ def test_register_success(mock_db_session):
         "email": "test@example.com"
     }
 
+# Test to check if the user Already exists
 def test_register_user_already_exists(mock_db_session):
     mock_user = schemas.ShowUser(id=1, username="existinguser", email="existing@example.com")
     service.get_user_by_username = MagicMock(return_value=mock_user)
@@ -41,6 +43,8 @@ def test_register_user_already_exists(mock_db_session):
     response = client.post("/register", json=data)
     assert response.status_code == 400
     assert response.json() == {"detail": "Username already registered"}
+
+# Test ti Invalid creds
 def test_login_invalid_username(mock_db_session):
     service.get_user_by_username = MagicMock(return_value=None)
     data = {
