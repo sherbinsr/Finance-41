@@ -89,6 +89,62 @@ Finance-41 is a financial advisor application that leverages GenAI technology to
 ## Home Page
 ![Home page.](Screenshots/home.png)
 
+## About Section 
+![About us section.](Screenshots/about.png)
+
+## User Activity Section 
+![User activity section.](Screenshots/useractivity.png)
+
+## AI powered Financial Chatbot
+![ AI powered financial chatbot.](Screenshots/chatbot.png)
+
+## Portfolio Risk Analysis
+![ AI powered portfolio chatbot.](Screenshots/portfolio.png)
+![ AI powered  portfolio chatbot.](Screenshots/portfolio2.png)
+
+## Batch Jobs
+![ Automated batch jobs.](Screenshots/batch-jobs.png)
+
+## Market Trends
+![ market gainers.](Screenshots/top-gainers.png)
+![ market losers.](Screenshots/top-gainers.png)
+
+## Industrial Search
+![ Industrial seacrh.](Screenshots/search stock1.png)
+![ Industrial seacrh.](Screenshots/search stock2.png)
+
+## Market News
+![ Market News.](Screenshots/News.png)
+
+## Sorting latest Market News
+![latest Market News.](Screenshots/latestnews.png)
+
+## Educational Resources
+![Educational resources.](Screenshots/educationalsrc.png)
+
+## ContactUs Using EmailJS
+![ Market News.](Screenshots/contactus.png)
+![ Market News.](Screenshots/emailjs.png)
+
+## Authentication
+![ register.](Screenshots/register.png)
+![ login.](Screenshots/sso-login.png)
+
+
+## Single sign on(sso-login)
+![ SSO-login.](Screenshots/register.png)
+
+### Non functional requirements
+
+## Swagger-OpenAPI specification
+![ swagger.](Screenshots/swagger.png)
+
+## Postman
+![ Postman.](Screenshots/postman.png)
+
+## Test Case
+![ Testcases.](Screenshots/testcase.png)
+
 ## Conclusion
 
 Finance-41 aims to empower users with the tools and insights necessary for effective financial decision-making. By leveraging modern web technologies and a user-centric design, the application seeks to provide a seamless experience for individuals looking to navigate the complexities of investing. We welcome feedback and contributions to enhance the platform further. Join us on this journey to make financial knowledge accessible and actionable for everyone!
