@@ -84,6 +84,11 @@ Finance-41 is a financial advisor application that leverages GenAI technology to
 - Access the React application at http://localhost:3000.
 - Access the Fastapi application at http://127.0.0.1:8000/
 
+### Screenshots
+
+## Home Page
+![Home page.](Screenshots/home.png)
+
 ## Conclusion
 
 Finance-41 aims to empower users with the tools and insights necessary for effective financial decision-making. By leveraging modern web technologies and a user-centric design, the application seeks to provide a seamless experience for individuals looking to navigate the complexities of investing. We welcome feedback and contributions to enhance the platform further. Join us on this journey to make financial knowledge accessible and actionable for everyone!
