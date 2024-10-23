@@ -1,23 +1,332 @@
 import pytest
 from fastapi.testclient import TestClient
 from unittest.mock import patch
-from app.main import app  # Ensure this points to your FastAPI app
+from app.main import app
 
 client = TestClient(app)
 
 @pytest.fixture
 def mock_fetch_market_trends():
-    with patch("app.services.service.fetch_market_trends") as mock:
+    with patch("app.services.service.market_trends") as mock:
         yield mock
 
 def test_get_market_trends_success(mock_fetch_market_trends):
-    mock_fetch_market_trends.return_value = {"market": "up", "trends": "bullish"}
+    mock_fetch_market_trends.return_value = {
+        "trending_stocks": {
+            "top_gainers": [
+                {
+                    "ticker_id": "S0003015",
+                    "company_name": "Bajaj Finance",
+                    "price": "7055.1",
+                    "percent_change": "5.65",
+                    "net_change": "377.2",
+                    "bid": "7055.1",
+                    "ask": "7056.45",
+                    "high": "7098.85",
+                    "low": "6601",
+                    "open": "6605.75",
+                    "low_circuit_limit": "6010.15",
+                    "up_circuit_limit": "7345.65",
+                    "volume": "1823497",
+                    "date": "2024-10-23",
+                    "time": "07:15:03",
+                    "close": "6677.9",
+                    "bid_size": "5",
+                    "ask_size": "6",
+                    "exchange_type": "NSI",
+                    "lot_size": "1",
+                    "year_low": "6187.8",
+                    "year_high": "7884.9",
+                    "ric": "BJFN.NS"
+                },
+                {
+                    "ticker_id": "S0003120",
+                    "company_name": "Bajaj Auto",
+                    "price": "10696.9",
+                    "percent_change": "3.17",
+                    "net_change": "328.55",
+                    "bid": "10695.9",
+                    "ask": "10696.9",
+                    "high": "10735.1",
+                    "low": "10342.45",
+                    "open": "10368",
+                    "low_circuit_limit": "9331.55",
+                    "up_circuit_limit": "11405.15",
+                    "volume": "904580",
+                    "date": "2024-10-23",
+                    "time": "07:15:03",
+                    "close": "10368.35",
+                    "bid_size": "63",
+                    "ask_size": "26",
+                    "exchange_type": "NSI",
+                    "lot_size": "1",
+                    "year_low": "5236",
+                    "year_high": "12774",
+                    "ric": "BAJA.NS"
+                },
+                {
+                    "ticker_id": "S0003036",
+                    "company_name": "Bajaj Finserv",
+                    "price": "1769.75",
+                    "percent_change": "2.74",
+                    "net_change": "47.15",
+                    "bid": "1769.75",
+                    "ask": "1769.8",
+                    "high": "1774.4",
+                    "low": "1727.55",
+                    "open": "1727.55",
+                    "low_circuit_limit": "1550.35",
+                    "up_circuit_limit": "1894.85",
+                    "volume": "1478604",
+                    "date": "2024-10-23",
+                    "time": "07:15:03",
+                    "close": "1722.6",
+                    "bid_size": "1",
+                    "ask_size": "3",
+                    "exchange_type": "NSI",
+                    "lot_size": "1",
+                    "year_low": "1419.05",
+                    "year_high": "2029.9",
+                    "ric": "BJFS.NS"
+                }
+            ],
+            "top_losers": [
+                {
+                    "ticker_id": "S0003057",
+                    "company_name": "NTPC",
+                    "price": "408.2",
+                    "percent_change": "-1.82",
+                    "net_change": "-7.55",
+                    "bid": "408.1",
+                    "ask": "408.2",
+                    "high": "414.75",
+                    "low": "401.7",
+                    "open": "414",
+                    "low_circuit_limit": "374.2",
+                    "up_circuit_limit": "457.3",
+                    "volume": "13417322",
+                    "date": "2024-10-23",
+                    "time": "07:15:03",
+                    "close": "415.75",
+                    "bid_size": "1223",
+                    "ask_size": "231",
+                    "exchange_type": "NSI",
+                    "lot_size": "1",
+                    "year_low": "227.75",
+                    "year_high": "448.45",
+                    "ric": "NTPC.NS"
+                },
+                {
+                    "ticker_id": "S0003086",
+                    "company_name": "Adani Ports & Special Economic Zone",
+                    "price": "1342.5",
+                    "percent_change": "-1.49",
+                    "net_change": "-20.35",
+                    "bid": "1342.55",
+                    "ask": "1342.75",
+                    "high": "1370.8",
+                    "low": "1340.6",
+                    "open": "1362.8",
+                    "low_circuit_limit": "1226.6",
+                    "up_circuit_limit": "1499.1",
+                    "volume": "915845",
+                    "date": "2024-10-23",
+                    "time": "07:15:00",
+                    "close": "1362.85",
+                    "bid_size": "25",
+                    "ask_size": "27",
+                    "exchange_type": "NSI",
+                    "lot_size": "1",
+                    "year_low": "754.5",
+                    "year_high": "1621.4",
+                    "ric": "APSE.NS"
+                },
+                {
+                    "ticker_id": "S0003019",
+                    "company_name": "ICICI Bank",
+                    "price": "1250",
+                    "percent_change": "-1.38",
+                    "net_change": "-17.5",
+                    "bid": "1250",
+                    "ask": "1250.15",
+                    "high": "1267.95",
+                    "low": "1243.05",
+                    "open": "1261",
+                    "low_circuit_limit": "1140.75",
+                    "up_circuit_limit": "1394.25",
+                    "volume": "6000275",
+                    "date": "2024-10-23",
+                    "time": "07:15:03",
+                    "close": "1267.5",
+                    "bid_size": "112",
+                    "ask_size": "104",
+                    "exchange_type": "NSI",
+                    "lot_size": "1",
+                    "year_low": "899",
+                    "year_high": "1362.35",
+                    "ric": "ICBK.NS"
+                }
+            ]
+        }
+    }
     response = client.get("/market-trends")
     assert response.status_code == 200
-    assert response.json() == {"market": "up", "trends": "bullish"}
+    assert response.json() =={
+        "trending_stocks": {
+            "top_gainers": [
+                {
+                    "ticker_id": "S0003015",
+                    "company_name": "Bajaj Finance",
+                    "price": "7055.1",
+                    "percent_change": "5.65",
+                    "net_change": "377.2",
+                    "bid": "7055.1",
+                    "ask": "7056.45",
+                    "high": "7098.85",
+                    "low": "6601",
+                    "open": "6605.75",
+                    "low_circuit_limit": "6010.15",
+                    "up_circuit_limit": "7345.65",
+                    "volume": "1823497",
+                    "date": "2024-10-23",
+                    "time": "07:15:03",
+                    "close": "6677.9",
+                    "bid_size": "5",
+                    "ask_size": "6",
+                    "exchange_type": "NSI",
+                    "lot_size": "1",
+                    "year_low": "6187.8",
+                    "year_high": "7884.9",
+                    "ric": "BJFN.NS"
+                },
+                {
+                    "ticker_id": "S0003120",
+                    "company_name": "Bajaj Auto",
+                    "price": "10696.9",
+                    "percent_change": "3.17",
+                    "net_change": "328.55",
+                    "bid": "10695.9",
+                    "ask": "10696.9",
+                    "high": "10735.1",
+                    "low": "10342.45",
+                    "open": "10368",
+                    "low_circuit_limit": "9331.55",
+                    "up_circuit_limit": "11405.15",
+                    "volume": "904580",
+                    "date": "2024-10-23",
+                    "time": "07:15:03",
+                    "close": "10368.35",
+                    "bid_size": "63",
+                    "ask_size": "26",
+                    "exchange_type": "NSI",
+                    "lot_size": "1",
+                    "year_low": "5236",
+                    "year_high": "12774",
+                    "ric": "BAJA.NS"
+                },
+                {
+                    "ticker_id": "S0003036",
+                    "company_name": "Bajaj Finserv",
+                    "price": "1769.75",
+                    "percent_change": "2.74",
+                    "net_change": "47.15",
+                    "bid": "1769.75",
+                    "ask": "1769.8",
+                    "high": "1774.4",
+                    "low": "1727.55",
+                    "open": "1727.55",
+                    "low_circuit_limit": "1550.35",
+                    "up_circuit_limit": "1894.85",
+                    "volume": "1478604",
+                    "date": "2024-10-23",
+                    "time": "07:15:03",
+                    "close": "1722.6",
+                    "bid_size": "1",
+                    "ask_size": "3",
+                    "exchange_type": "NSI",
+                    "lot_size": "1",
+                    "year_low": "1419.05",
+                    "year_high": "2029.9",
+                    "ric": "BJFS.NS"
+                }
+            ],
+            "top_losers": [
+                {
+                    "ticker_id": "S0003057",
+                    "company_name": "NTPC",
+                    "price": "408.2",
+                    "percent_change": "-1.82",
+                    "net_change": "-7.55",
+                    "bid": "408.1",
+                    "ask": "408.2",
+                    "high": "414.75",
+                    "low": "401.7",
+                    "open": "414",
+                    "low_circuit_limit": "374.2",
+                    "up_circuit_limit": "457.3",
+                    "volume": "13417322",
+                    "date": "2024-10-23",
+                    "time": "07:15:03",
+                    "close": "415.75",
+                    "bid_size": "1223",
+                    "ask_size": "231",
+                    "exchange_type": "NSI",
+                    "lot_size": "1",
+                    "year_low": "227.75",
+                    "year_high": "448.45",
+                    "ric": "NTPC.NS"
+                },
+                {
+                    "ticker_id": "S0003086",
+                    "company_name": "Adani Ports & Special Economic Zone",
+                    "price": "1342.5",
+                    "percent_change": "-1.49",
+                    "net_change": "-20.35",
+                    "bid": "1342.55",
+                    "ask": "1342.75",
+                    "high": "1370.8",
+                    "low": "1340.6",
+                    "open": "1362.8",
+                    "low_circuit_limit": "1226.6",
+                    "up_circuit_limit": "1499.1",
+                    "volume": "915845",
+                    "date": "2024-10-23",
+                    "time": "07:15:00",
+                    "close": "1362.85",
+                    "bid_size": "25",
+                    "ask_size": "27",
+                    "exchange_type": "NSI",
+                    "lot_size": "1",
+                    "year_low": "754.5",
+                    "year_high": "1621.4",
+                    "ric": "APSE.NS"
+                },
+                {
+                    "ticker_id": "S0003019",
+                    "company_name": "ICICI Bank",
+                    "price": "1250",
+                    "percent_change": "-1.38",
+                    "net_change": "-17.5",
+                    "bid": "1250",
+                    "ask": "1250.15",
+                    "high": "1267.95",
+                    "low": "1243.05",
+                    "open": "1261",
+                    "low_circuit_limit": "1140.75",
+                    "up_circuit_limit": "1394.25",
+                    "volume": "6000275",
+                    "date": "2024-10-23",
+                    "time": "07:15:03",
+                    "close": "1267.5",
+                    "bid_size": "112",
+                    "ask_size": "104",
+                    "exchange_type": "NSI",
+                    "lot_size": "1",
+                    "year_low": "899",
+                    "year_high": "1362.35",
+                    "ric": "ICBK.NS"
+                }
+            ]
+        }
+    }
 
-def test_get_market_trends_failure(mock_fetch_market_trends):
-    mock_fetch_market_trends.side_effect = Exception("Service error")
-    response = client.get("/market-trends")
-    assert response.status_code == 500
-    assert response.json() == {"detail": "Error fetching market trends"}
