@@ -80,8 +80,8 @@ function Chatbot() {
         {chatHistory.map((chat, index) => (
           <div key={index} className={`chat-message ${chat.sender}`}>
             <div className={`message-bubble ${chat.sender}`}>
-              <pre>{chat.text}</pre>
-              <span className="timestamp">{formatTimestamp(chat.timestamp)}</span>
+              <pre style={{ whiteSpace: 'pre-wrap', fontFamily: 'Open Sans,Arial ,sans-serif', fontSize:'16px' }}>{chat.text}</pre>
+              <span   style={{ whiteSpace: 'pre-wrap', fontFamily: 'Open Sans,Arial ,sans-serif', fontSize:'12px' }} className="timestamp">{formatTimestamp(chat.timestamp)}</span>
             </div>
           </div>
         ))}

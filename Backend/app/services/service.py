@@ -238,6 +238,7 @@ def get_stock_info(name: str):
     response.raise_for_status()
     return response.json()
 
+# Function to Analyze the portfolio risks
 def analyze_portfolio(portfolio_data):
     try:
         content = f"""Analyze the risk for the following portfolio: {portfolio_data}.

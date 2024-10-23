@@ -206,6 +206,7 @@ async def get_user_count(db: Session = Depends(get_db)):
     user_count = service.get_user_count_from_db(db=db)
     return {"user_count": user_count}
 
+# Api to fetch Informations about particular stocks
 @app.get("/stock")
 def get_stock(name: str):
     try:
@@ -216,6 +217,7 @@ def get_stock(name: str):
     except Exception as err:
         raise HTTPException(status_code=500, detail=str(err))
 
+# Api to analyze portfolio
 @app.post("/analyze")
 def analyze_portfolio(portfolio: schemas.Portfolio):
     total_value = 0
