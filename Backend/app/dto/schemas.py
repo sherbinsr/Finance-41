@@ -48,3 +48,19 @@ class PortfolioItem(BaseModel):
 
 class Portfolio(BaseModel):
     items: List[PortfolioItem]
+
+class EducationalResourceResponse(BaseModel):
+    id: int
+    title: str
+    content: str
+    video_url: str
+    created_at: str
+
+    class Config:
+        orm_mode = True
+
+class EducationalResourceCreate(BaseModel):
+    title: str
+    content: str
+    video_url: str
+    created_at: str

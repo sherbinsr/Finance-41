@@ -17,3 +17,12 @@ class Article(Base):
     title = Column(String, index=True)
     content = Column(Text)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+
+class EducationalResource(Base):
+    __tablename__ = "educational_resources"
+
+    id = Column(Integer, primary_key=True, index=True)
+    title = Column(String, index=True)
+    content = Column(String)
+    video_url = Column(String)
+    created_at = Column(String)

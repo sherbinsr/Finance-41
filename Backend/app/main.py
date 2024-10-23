@@ -1,10 +1,12 @@
+from builtins import list
+
 from fastapi import FastAPI, Depends, HTTPException,Request
 from sqlalchemy.orm import Session
 import logging
 import  requests
 from app.config import secrets
 from  app.dto import  schemas
-from .services import articleservice, service
+from .services import articleservice, service, resourceservice
 from .database import engine, Base, get_db
 from pydantic import BaseModel
 from fastapi import FastAPI, BackgroundTasks
@@ -247,3 +249,15 @@ def analyze_portfolio(portfolio: schemas.Portfolio):
     }
 
     return analysis
+
+# Endpoint to get educational resources
+@app.get("/educational_resources", response_model=list[schemas.EducationalResourceResponse])
+async def get_educational_resources(db: Session = Depends(get_db)):
+    resources = resourceservice.get_all_resources(db=db)
+    return resources
+
+# Endpoint to create a new educational resource
+@app.post("/educational_resources", response_model=schemas.EducationalResourceCreate)
+async def create_educational_resource(resource: schemas.EducationalResourceCreate, db: Session = Depends(get_db)):
+  logger.debug("adding new educational resource")
+  return resourceservice.create_resource(db=db, resource=resource)
