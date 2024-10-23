@@ -33,13 +33,10 @@ def setup_database():
 client = TestClient(app)
 
 def test_create_article(setup_database):
-    # Article data
     article_data = {
         "title": "Stock Market Crash 2024",
         "content": "The global stock markets have taken a nosedive due to unprecedented inflation...",
     }
-
-    # Send a POST request to create the article
     response = client.post("/addarticle", json=article_data)
     assert response.status_code == 200
     data = response.json()
