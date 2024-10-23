@@ -24,8 +24,8 @@ Finance-41 is a financial advisor application that leverages GenAI technology to
 - **Deployment:** Docker
 
 ## Docker Repositories
-- [Frontend Docker Repository](https://hub.docker.com/r/sherbinsr/frontend)
-- [Backend Docker Repository](https://hub.docker.com/r/sherbinsr/backend)
+- [Frontend Docker Repository](https://hub.docker.com/repository/docker/sherbinsr/finance-41-frontend/)
+- [Backend Docker Repository](https://hub.docker.com/repository/docker/sherbinsr/finance-41-backend/tags)
 
 
 ## Installation
