@@ -134,7 +134,7 @@ Finance-41 is a financial advisor application that leverages GenAI technology to
 ## Single sign on(sso-login)
 ![ SSO-login.](Screenshots/sso-login.png)
 
-### Non functional requirements
+# Non functional requirements
 
 ## Swagger-OpenAPI specification
 ![ swagger.](Screenshots/swagger.png)
