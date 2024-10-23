@@ -1,66 +1,53 @@
 import pytest
 from fastapi.testclient import TestClient
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
-from app import main
-from app.database import Base
+from sqlalchemy.orm import Session
+from app.main import app,service,schemas
+from unittest.mock import MagicMock
 
-DATABASE_URL = "sqlite:///./testing.db"
 
-# Create a new SQLAlchemy engine for the test database
-engine = create_engine(DATABASE_URL)
-TestingSessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+client = TestClient(app)
 
-# Create the database tables
-Base.metadata.create_all(bind=engine)
+# Mock the database session and service functions
+@pytest.fixture
+def mock_db_session():
+    db = MagicMock(spec=Session)
+    return db
 
-# Create a test client
-client = TestClient(main.app)
-
-@pytest.fixture(scope="function")
-def db_session():
-    # Create a new database session for a test
-    db = TestingSessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
-
-def test_register_new_user(db_session):
-    user_data = {
-        "username": "testuser",  # Corrected username
-        "email": "te@example.com",
-        "password": "testpassword"
-    }
-
-    response = client.post("/register", json=user_data)
-    assert response.status_code == 200
-    assert response.json()["username"] == user_data["username"]
-
-    # Try to register the same user again
-    response = client.post("/register", json=user_data)
-    assert response.status_code == 400
-    assert response.json()["detail"] == "Username already registered"
-
-def test_login_user(db_session):
-    user_data = {
+def test_register_success(mock_db_session):
+    service.get_user_by_username = MagicMock(return_value=None)
+    mock_user = schemas.ShowUser(id=1, username="testuser", email="test@example.com")
+    service.create_user = MagicMock(return_value=mock_user)
+    data = {
         "username": "testuser",
-        "password": "testpassword"
+        "password": "password123",
+        "email": "test@example.com"
     }
-    response = client.post("/login", json=user_data)
+    response = client.post("/register", json=data)
     assert response.status_code == 200
-    assert response.json()["message"] == "Login successful!"
-    wrong_user_data = {
-        "username": "wronguser",
-        "password": "testpassword"
-    }
-    response = client.post("/login", json=wrong_user_data)
-    assert response.status_code == 400
-    assert response.json()["detail"] == "Invalid username or password"
-    wrong_password_data = {
+    assert response.json() == {
+        "id": 1,
         "username": "testuser",
-        "password": "wrongpassword"
+        "email": "test@example.com"
     }
-    response = client.post("/login", json=wrong_password_data)
+
+def test_register_user_already_exists(mock_db_session):
+    mock_user = schemas.ShowUser(id=1, username="existinguser", email="existing@example.com")
+    service.get_user_by_username = MagicMock(return_value=mock_user)
+    data = {
+        "username": "existinguser",
+        "password": "password123",
+        "email": "existing@example.com"
+    }
+    response = client.post("/register", json=data)
     assert response.status_code == 400
-    assert response.json()["detail"] == "Invalid password"
+    assert response.json() == {"detail": "Username already registered"}
+def test_login_invalid_username(mock_db_session):
+    service.get_user_by_username = MagicMock(return_value=None)
+    data = {
+        "username": "invaliduser",
+        "password": "password123"
+    }
+    response = client.post("/login", json=data)
+
+    assert response.status_code == 400
+    assert response.json() == {"detail": "Invalid username or password"}

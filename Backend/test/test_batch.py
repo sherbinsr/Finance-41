@@ -7,7 +7,7 @@ client = TestClient(app)
 
 @pytest.fixture
 def mock_fetch_market_trends():
-    with patch("app.services.service.fetch_market_trends", new_callable=AsyncMock) as mock:
+    with patch("app.services.service.market_trends", new_callable=AsyncMock) as mock:
         yield mock
 @pytest.fixture
 def mock_get_users():
