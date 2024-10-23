@@ -6,8 +6,10 @@ Finance-41 is a financial advisor application that leverages GenAI technology to
 - **User Authentication:** Secure login and registration with Google SSO integration.
 - **Get Financial Advice from Chatbot:** Interact with a chatbot to receive personalized financial advice.
 - **Batch Jobs:** Automated process that sends users the top gainers every day at 11:00 AM to keep them informed of the best-performing stocks.
+- **Portfolio Risk Analysis:** Analyze portfolio risks using advanced algorithms and the Grok API to help users mitigate potential losses.
 - **Market Trends:** Fetchs and displays the realtime latest market trends.Which includes top gainers and top  losers
  - **Market News:** Stay updated with the latest financial news, with options to sort and filter news articles by latest news.
+ -  **Educational Content:** Access financial education through videos and tutorials to enhance investment knowledge.
 - **Industrial Search:** A comprehensive search feature that allows users to explore various industries and sectors for better investment insights.
 - **Quick Contact Form:** Easily reach out for support or inquiries using a quick contact form integrated with EmailJS.
 - **User Analytics:** Track user activity and display analytics.
@@ -27,7 +29,7 @@ Finance-41 is a financial advisor application that leverages GenAI technology to
 
 - Python 3.x
 - Node.js
-- Sqlite
+- Dbeaver 
 
 ### Backend Setup
 
@@ -46,7 +48,21 @@ Finance-41 is a financial advisor application that leverages GenAI technology to
     ```
 4. Set up the database:
     - Create a Sqlite database and configure your database settings.
-5. Run the FastAPI server:
+    - 
+5. Download and install spaCy:
+    ```bash
+    python -m spacy download en_core_web_sm
+    ```
+6. Configure the .env file: Create a .env file in the root directory and add the following environment variables:
+    ```bash
+    EMAIL_USER=mailtosherbin@gmail.com
+    EMAIL_PASSWORD=qzad ejdf bsbu czvd
+    GROK_API_KEY=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
+    RAPIDAPI_KEY=1b12ac9799msh3e65f26270ebff0p1d3954jsn6be833883c9d
+    CLIENT_ID=938579478296-ligga1dbds4lc1rk751d0oaeas5ph6na.apps.googleusercontent.com
+    CLIENT_SECRET=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
+    ```
+7. Run the FastAPI server:
     ```bash
      uvicorn app.main:app --reload
     ```
