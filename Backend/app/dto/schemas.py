@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 from datetime import datetime
+from typing import List
 
 class UserCreate(BaseModel):
     username: str
@@ -38,3 +39,12 @@ class Article(ArticleBase):
 
     class Config:
         orm_mode = True
+
+
+class PortfolioItem(BaseModel):
+    symbol: str
+    quantity: float
+    price: float
+
+class Portfolio(BaseModel):
+    items: List[PortfolioItem]

@@ -237,3 +237,29 @@ def get_stock_info(name: str):
     response = requests.get(url, headers=headers, params=querystring)
     response.raise_for_status()
     return response.json()
+
+def analyze_portfolio(portfolio_data):
+    try:
+        content = f"""Analyze the risk for the following portfolio: {portfolio_data}.
+        Include the following metrics in the response:
+        - Volatility
+        - Value at Risk (VaR)
+        - Expected Shortfall (ES)
+        - Market Sensitivity (Beta)
+        make the response more simple
+        """
+
+        chat_completion = client.chat.completions.create(
+            messages=[
+                {
+                    "role": "user",
+                    "content": content
+                }
+            ],
+            model="llama3-8b-8192",
+        )
+
+        return chat_completion.choices[0].message.content
+
+    except Exception as e:
+        raise Exception(f"Error calling Groq API: {str(e)}")
