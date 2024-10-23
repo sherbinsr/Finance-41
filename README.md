@@ -107,11 +107,11 @@ Finance-41 is a financial advisor application that leverages GenAI technology to
 
 ## Market Trends
 ![ market gainers.](Screenshots/top-gainers.png)
-![ market losers.](Screenshots/top-gainers.png)
+![ market losers.](Screenshots/top-losers.png)
 
 ## Industrial Search
-![ Industrial seacrh.](Screenshots/search stock1.png)
-![ Industrial seacrh.](Screenshots/search stock2.png)
+![ Industrial seacrh.](Screenshots/searchstock1.png)
+![ Industrial seacrh.](Screenshots/searchstock2.png)
 
 ## Market News
 ![ Market News.](Screenshots/News.png)
@@ -128,7 +128,7 @@ Finance-41 is a financial advisor application that leverages GenAI technology to
 
 ## Authentication
 ![ register.](Screenshots/register.png)
-![ login.](Screenshots/sso-login.png)
+![ login.](Screenshots/login.png)
 
 
 ## Single sign on(sso-login)
