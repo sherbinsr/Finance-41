@@ -28,7 +28,15 @@ load_dotenv()
 # Recreate the articles table with the new structure
 Base.metadata.create_all(bind=engine)
 
-app = FastAPI()
+app = FastAPI(title="Finance 41 API'S",
+              description="The AI Powered Financial Advisor is a solution aimed at addressing the critical challenges users face with traditional financial advisory services. It aims to provide affordable, accessible, and personalized financial advice through a tailored chatbot interface. By leveraging artificial intelligence, the product will automate financial analysis",
+              version="1.0.0",
+              contact={
+                  "name": "Sherbin S",
+                  "email": "sherbinsyles31@gmail.com",
+              },
+
+              )
 
 logger = logging.getLogger(__name__)
 
