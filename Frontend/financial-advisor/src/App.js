@@ -18,17 +18,17 @@ function App() {
     <Router>
       <Topbar/>
       <Routes>      
-      <Route path="/" element={<Home/>} />
-      <Route path="/chatbot" element={<Chatbot />} />
-      <Route path="/register" element={<Register />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/home/:id" element={<Home />} />
-      <Route path="/contactus" element={<ContactUs/>}/> 
-      <Route path="/news" element={<News/>}/> 
-      <Route path="/trends" element={<MarketTrends/>}/> 
-      <Route path="/stockinfo" element={<StockInfo/>}/> 
-      <Route path="/portfolio" element={<Portfolio/>}/>
-      <Route path="/404" element={<NotFound/>}/> 
+      <Route path="/proxy/3000/" element={<Home/>} />
+      <Route path="/proxy/3000/chatbot" element={<Chatbot />} />
+      <Route path="/proxy/3000/register" element={<Register />} />
+      <Route path="/proxy/3000/login" element={<Login />} />
+      <Route path="/proxy/3000/home/:id" element={<Home />} />
+      <Route path="/proxy/3000/contactus" element={<ContactUs/>}/> 
+      <Route path="/proxy/3000/news" element={<News/>}/> 
+      <Route path="/proxy/3000/trends" element={<MarketTrends/>}/> 
+      <Route path="/proxy/3000/stockinfo" element={<StockInfo/>}/> 
+      <Route path="/proxy/3000/portfolio" element={<Portfolio/>}/>
+      <Route path="/proxy/3000/404" element={<NotFound/>}/> 
       </Routes>
     </Router>
   );

@@ -11,7 +11,7 @@
 .main-content {
   background-image: 
     linear-gradient(to bottom, rgba(255, 255, 255, 0) 70%, rgba(0, 0, 0, 0.7)), 
-    url('../../assets/bg2.jpg'); /* Replace with actual path */
+    url('../../assets/bg2.jpg'); 
   background-size: cover;
   background-position: center;
   height: 100%;
@@ -24,7 +24,6 @@
   color: white;
 }
 
-/* Center nav items and apply hover underline effect */
 .header-links {
   display: flex;
   align-items: center;
@@ -48,7 +47,7 @@
   display: block;
   left: 50%;
   bottom: 0;
-  background: #ffffff; /* Color of the underline */
+  background: #ffffff; 
   transition: width 0.3s ease, left 0.3s ease;
 }
 
