@@ -55,7 +55,7 @@ oauth.register(
     refresh_token_url=None,
     auth_provider_x509_cert_url='https://www.googleapis.com/oauth2/v1/certs',
     jwks_uri = 'https://www.googleapis.com/oauth2/v3/certs',
-    redirect_uri='http://127.0.0.1:8000/auth',
+    redirect_uri='https://finance-41-1081098542602.us-central1.run.app/proxy/8000/auth',
     client_kwargs={'scope': 'openid email profile'}
 )
 secret_key = secrets.genrate_secret_key()

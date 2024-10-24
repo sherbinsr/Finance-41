@@ -16,7 +16,7 @@ const Register = () => {
 
       setMessage("Registration successful!");
       setAlertType("success");
-      navigate('/login'); 
+      navigate('/proxy/3000/login'); 
       setUsername("");
       setEmail("");
       setPassword("");
