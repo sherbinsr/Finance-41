@@ -96,7 +96,6 @@ def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Invalid password")
 
     logger.info("Login successful!!!")
-    service.fetch_market_trends()
     return {"message": "Login successful!", "id": db_user.id}
 
 # Google SSO Login
