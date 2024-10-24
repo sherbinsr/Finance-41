@@ -125,18 +125,18 @@ async def auth(request: Request, db: Session = Depends(get_db)):
         db_user = service.get_user_by_username(db, email)
         if db_user:
             # If the user exists, redirect to 404 page
-            return RedirectResponse(url="http://localhost:3000/proxy/3000/404")
+            return RedirectResponse(url="https://finance-41-1081098542602.us-central1.run.app/proxy/3000/404")
 
         # If user doesn't exist, create a new one
         db_user = service.create_user(db, schemas.UserCreate(username=name, email=email, password=at_hash))
-        return RedirectResponse(url="http://localhost:3000/")
+        return RedirectResponse(url="https://finance-41-1081098542602.us-central1.run.app/proxy/3000/")
 
     except ValueError as ve:
         logger.error(f"ValueError: {str(ve)}")
         raise HTTPException(status_code=400, detail=str(ve))
     except Exception as e:
         logger.error(f"Error: {str(e)}")
-        return RedirectResponse(url="http://localhost:3000/404")
+        return RedirectResponse(url="https://finance-41-1081098542602.us-central1.run.app/proxy/3000/404")
         raise HTTPException(status_code=500, detail="Authentication failed user already exists")
 
 
