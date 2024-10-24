@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: finance-backend
+    ports:
+      - "8000:8000"  # Maps FastAPI port
+    env_file:
+      - ./Backend/.env
+    volumes:
+      - ./Backend:/app
+      - ./Backend/sqlite:/app/sqlite  
+    depends_on:
+      - frontend
+
+  frontend:
+    build:
+      context: ./Frontend/financial-advisor
+      dockerfile: Dockerfile
+    container_name: finance-frontend
+    ports:
+      - "3000:3000"  
+    env_file:
+      - ./Frontend/financial-advisor/.env
+    volumes:
+      - ./Frontend/financial-advisor:/app
+
+volumes:
+  # Define volume for SQLite file persistence
+  db-data:
