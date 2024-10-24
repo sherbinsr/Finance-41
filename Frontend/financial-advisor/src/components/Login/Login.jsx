@@ -19,6 +19,7 @@ function Login() {
       const response = await AuthService.login({ username, password });
       setSuccess('Login successful!');
       const userId = response.id;
+      console.log(userId);
       navigate(`/proxy/3000/home/${userId}`);
     } catch (err) {
       setError(err);
