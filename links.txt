@@ -1,0 +1,28 @@
+Backend
+
+LocalHost Fastapi Backend -   http://127.0.0.1:8000/
+
+Swagger - http://127.0.0.1:8000/docs
+
+Swagger redoc - http://127.0.0.1:8000/redocs
+
+
+
+Frontend 
+
+Localhost React Backend - http://localhost:3000/
+
+
+TQ Links
+
+Backend - https://finance-41-1081098542602.us-central1.run.app/proxy/8000/
+
+Frontend - https://finance-41-1081098542602.us-central1.run.app/proxy/3000/
+
+
+
+Docker Hub 
+
+Backend - https://hub.docker.com/repository/docker/sherbinsr/finance-41-frontend/tags
+
+Frontend - https://hub.docker.com/repository/docker/sherbinsr/finance-41-backend/tags
