@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const api_url = "http://127.0.0.1:8000/market-trends";
+const api_url = "https://finance-41-1081098542602.us-central1.run.app/proxy/8000/market-trends";
 
 export const fetchMarketData = async () => {
   try {

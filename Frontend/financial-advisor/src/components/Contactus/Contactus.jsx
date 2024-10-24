@@ -41,7 +41,6 @@ const ContactUs = () => {
         (response) => {
           console.log('SUCCESS!', response.status, response.text);
           alert('Message sent successfully!');
-          // Reset the form fields
           setFormData({
             firstName: '',
             lastName: '',

@@ -11,7 +11,7 @@
   padding: 10px;
   background-color: white;
   max-height: 80%; 
-  overflow-y: hidden; /* Remove the scrollbar */
+  overflow-y: hidden; 
   display: flex;
   flex-direction: column; 
 }
@@ -33,13 +33,13 @@
   display: inline-block;
   padding: 10px 15px;
   border-radius: 10px;
-  max-width: 70%; /* Limit max width if needed */
-  height: fit-content; /* Adjust height based on content */
-  word-wrap: break-word; /* Ensure long words wrap */
+  max-width: 70%; 
+  height: fit-content; 
+  word-wrap: break-word; 
 }
 
 .user .message-bubble {
-  background-color: #007bff; /* User bubble color */
+  background-color: #007bff;
   color: white;
 }
 

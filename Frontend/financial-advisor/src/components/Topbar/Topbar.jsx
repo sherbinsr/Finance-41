@@ -1,9 +1,9 @@
 import { Navbar, Nav, Button, Container } from "react-bootstrap";
 import React from "react";
-import { Typography } from "@mui/material"; // Ensure Typography is imported from Material-UI
+import { Typography } from "@mui/material"; 
 
 const Topbar = () => {
-  return ( // Removed the extra curly braces
+  return ( 
     <div>
       <header className="header">
         <Navbar expand="md" bg="dark" variant="dark" className="p-3">
