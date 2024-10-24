@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_URL = 'https://finance-41-1081098542602.us-central1.run.app/proxy/8000'; 
+const API_URL = 'https://finance-41-1081098542602.us-central1.run.app/proxy/8000/'; 
 
 export const AuthService = {
   
