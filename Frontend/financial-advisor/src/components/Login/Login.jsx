@@ -30,8 +30,6 @@ function Login() {
       className="d-flex justify-content-center align-items-center vh-100">
       <div className="card shadow p-4" style={{ maxWidth: '400px', width: '100%' }}>
         <h2 className="text-center mb-4">Login</h2>
-        
-        {/* Alert messages */}
         {error && <div className="alert alert-danger text-center">{error}</div>}
         {success && <div className="alert alert-success text-center">{success}</div>}
 
