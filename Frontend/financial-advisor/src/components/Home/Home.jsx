@@ -6,9 +6,14 @@ import About from '../About/About';
 import ContactUs  from "../Contactus/Contactus";
 import Footer from "../Footer/Footer";
 import UserAnalytics from "../UserAnalytics/UserAnalytics";
-
+import { useNavigate } from 'react-router-dom';
 
 const Home = () => {
+  const navigate = useNavigate();
+
+  const handleButtonClick = () => {
+    navigate('/proxy/3000/chatbot');
+  };
   return (
     <div className="ct">
       <div className="app">
@@ -20,8 +25,8 @@ const Home = () => {
             <Typography variant="h5" className="text-light my-3">
               Discover how AI can make your wealth work harder for you.
             </Typography>
-            <Button variant="danger" size="lg" className="my-3">
-              Talk With AI
+            <Button variant="danger" size="lg" className="my-3" onClick={handleButtonClick}  >
+             Talk With AI 
             </Button>
             <Typography variant="body1" className="text-light">
               Upgrade your financial strategy today.

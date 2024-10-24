@@ -1,20 +1,18 @@
 import React, { useState } from "react";
-import { Link, useNavigate } from "react-router-dom"; // Import useNavigate
-import registerUser from "../../Service/RegisterService"; // Import the service
-
+import { Link, useNavigate } from "react-router-dom"; 
+import registerUser from "../../Service/RegisterService";
 const Register = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [message, setMessage] = useState("");
-  const [alertType, setAlertType] = useState(""); // Success or Error alert
-
-  const navigate = useNavigate(); // Initialize useNavigate
+  const [alertType, setAlertType] = useState(""); 
+  const navigate = useNavigate();
 
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      await registerUser(username, email, password); // Use the service
+      await registerUser(username, email, password); 
 
       setMessage("Registration successful!");
       setAlertType("success");
@@ -33,8 +31,6 @@ const Register = () => {
     <div className="d-flex justify-content-center align-items-center vh-100">
       <div className="card shadow p-4" style={{ maxWidth: "400px", width: "100%" }}>
         <h2 className="text-center mb-4">Register</h2>
-        
-        {/* Alert message */}
         {message && (
           <div className={`alert alert-${alertType} text-center`} role="alert">
             {message}
@@ -89,7 +85,7 @@ const Register = () => {
           </button>
         </form>
         <p className="text-center mt-3">
-          Already registered? <Link to="/login">Login</Link>
+          Already registered? <Link to="/proxy/3000/login">Login</Link>
         </p>
       </div>
     </div>

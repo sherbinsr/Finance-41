@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { AuthService } from '../../Service/LoginService';
-import { useNavigate, Link } from 'react-router-dom'; // Import Link
+import { useNavigate, Link } from 'react-router-dom'; 
 import GoogleSSOLogin from './GoogleSSOLogin';
 
 function Login() {
@@ -19,7 +19,7 @@ function Login() {
       const response = await AuthService.login({ username, password });
       setSuccess('Login successful!');
       const userId = response.id;
-      navigate(`/home/${userId}`);
+      navigate(`/proxy/3000/home/${userId}`);
     } catch (err) {
       setError(err);
     }
@@ -62,10 +62,8 @@ function Login() {
           </div>
           <button type="submit" className="btn btn-primary w-100">Login</button>
         </form>
-        
-        {/* Link to registration */}
         <p className="text-center mt-3">
-          New user? <Link to="/register">Register</Link>
+          New user? <Link to="/proxy/3000/register">Register</Link>
         </p>
         <GoogleSSOLogin/>
       </div>
