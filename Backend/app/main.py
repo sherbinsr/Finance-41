@@ -125,7 +125,7 @@ async def auth(request: Request, db: Session = Depends(get_db)):
         db_user = service.get_user_by_username(db, email)
         if db_user:
             # If the user exists, redirect to 404 page
-            return RedirectResponse(url="http://localhost:3000/404")
+            return RedirectResponse(url="http://localhost:3000/proxy/3000/404")
 
         # If user doesn't exist, create a new one
         db_user = service.create_user(db, schemas.UserCreate(username=name, email=email, password=at_hash))
