@@ -25,7 +25,7 @@ const StockInfo = () => {
         setError('');
         setStockData(null);
         try {
-            const response = await axios.get(`http://localhost:8000/stock`, {
+            const response = await axios.get(`https://finance-41-1081098542602.us-central1.run.app/proxy/8000/stock`, {
                 params: { name: stockName },
             });
             setStockData(response.data);

@@ -24,7 +24,6 @@ export default function UserAnalytics() {
     const { valueAngle, outerRadius, cx, cy } = useGaugeState();
   
     if (valueAngle === null) {
-      // No value to display
       return null;
     }
   
