@@ -2,7 +2,7 @@
 
 Finance-41 is a financial advisor application that leverages GenAI technology to provide users with personalized insights and analytics for informed investment decisions. The application is built using React for the frontend and FastAPI for the backend, focusing on user-friendly design and robust functionality. By utilizing the Grok API with a fine-tuned model, users can receive tailored financial advice to enhance their investment strategies.
 
-## Features
+# Features
 - **User Authentication:** Secure login and registration with Google SSO integration.
 - **Get Financial Advice from Chatbot:** Interact with a chatbot to receive personalized financial advice.
 - **Batch Jobs:** Automated process that sends users the top gainers every day at 11:00 AM to keep them informed of the best-performing stocks.
@@ -28,7 +28,7 @@ Finance-41 is a financial advisor application that leverages GenAI technology to
 - [Backend Docker Repository](https://hub.docker.com/repository/docker/sherbinsr/finance-41-backend/tags)
 
 
-## Installation
+# Installation
 
 ### Prerequisites
 
@@ -89,7 +89,7 @@ Finance-41 is a financial advisor application that leverages GenAI technology to
 - Access the React application at http://localhost:3000.
 - Access the Fastapi application at http://127.0.0.1:8000/
 
-### Screenshots
+# Screenshots
 
 ## Home Page
 ![Home page.](Screenshots/home.png)
