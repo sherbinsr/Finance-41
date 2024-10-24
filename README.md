@@ -53,7 +53,6 @@ Finance-41 is a financial advisor application that leverages GenAI technology to
     ```
 4. Set up the database:
     - Create a Sqlite database and configure your database settings.
-    - 
 5. Download and install spaCy:
     ```bash
     python -m spacy download en_core_web_sm
